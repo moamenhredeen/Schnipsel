@@ -1,1 +1,3 @@
 # Schnipsel
+
+code sharing platform
