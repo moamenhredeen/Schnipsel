@@ -1,0 +1,25 @@
+@url = http://localhost:8080/kakera/api
+
+### get snippets
+
+GET {{url}}/snippet
+Content-Type: application/json
+Accept: application/json
+
+### get snippet by id
+
+GET {{url}}/snippet/some-id
+Content-Type: application/json
+Accept: application/json
+
+### create a new snippet
+
+POST {{url}}/snippet
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "some snippet",
+  "description": "some description",
+  "content": "print('hello world')"
+}
