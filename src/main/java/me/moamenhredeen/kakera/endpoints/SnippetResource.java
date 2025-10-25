@@ -1,13 +1,11 @@
 package me.moamenhredeen.kakera.endpoints;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceUnit;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
-import me.moamenhredeen.kakera.domain.Snippet;
+import me.moamenhredeen.kakera.entities.Snippet;
 
 import java.util.List;
 import java.util.UUID;

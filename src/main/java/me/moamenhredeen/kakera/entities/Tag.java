@@ -1,4 +1,4 @@
-package me.moamenhredeen.kakera.domain;
+package me.moamenhredeen.kakera.entities;
 
 import jakarta.persistence.*;
 

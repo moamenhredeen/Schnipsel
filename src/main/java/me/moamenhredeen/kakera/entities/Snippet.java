@@ -1,6 +1,5 @@
-package me.moamenhredeen.kakera.domain;
+package me.moamenhredeen.kakera.entities;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 
 import java.util.List;
