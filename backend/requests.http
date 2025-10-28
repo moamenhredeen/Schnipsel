@@ -21,5 +21,6 @@ Accept: application/json
 {
   "title": "some snippet",
   "description": "some description",
+  "language": "python",
   "content": "print('hello world')"
 }
