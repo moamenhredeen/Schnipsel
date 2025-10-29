@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+
+.primary-toolbar {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: var(--mat-sys-primary-container),
+      container-text-color: var(--mat-sys-on-primary-container),
+    )
+  );
+
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-on-primary-container),
+      state-layer-color: var(--mat-sys-primary),
+    )
+  );
+}
+
+.nav-items {
+  @include mat.list-overrides(
+    (
+      list-item-selected-container-color: var(--mat-sys-primary-container),
+      active-indicator-shape: 0,
+      list-item-container-shape: 0,
+    )
+  );
+}

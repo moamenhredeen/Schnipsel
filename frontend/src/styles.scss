@@ -1,33 +1,32 @@
-@use "tailwindcss";
+@use 'tailwindcss';
 @use '@angular/material' as mat;
-
 
 @font-face {
   font-family: InterVariable;
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url("/fonts/InterVariable.woff2") format("woff2");
+  src: url('/fonts/InterVariable.woff2') format('woff2');
 }
 @font-face {
   font-family: InterVariable;
   font-style: italic;
   font-weight: 100 900;
   font-display: swap;
-  src: url("/fonts/InterVariable-Italic.woff2") format("woff2");
+  src: url('/fonts/InterVariable-Italic.woff2') format('woff2');
 }
 
-
-
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$rose-palette,
-      tertiary: mat.$red-palette,
-    ),
-    typography: InterVariable,
-    density: 0,
-  ));
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$rose-palette,
+        tertiary: mat.$red-palette,
+      ),
+      typography: InterVariable,
+      density: 0,
+    )
+  );
 }
 
 body {
@@ -38,11 +37,12 @@ body {
   margin: 0;
 }
 
-html, body { 
-  height: 100%; 
+html,
+body {
+  height: 100%;
 }
 
-body { 
-  margin: 0; 
-  font-family: InterVariable, "Helvetica Neue", sans-serif; 
+body {
+  margin: 0;
+  font-family: InterVariable, 'Helvetica Neue', sans-serif;
 }
