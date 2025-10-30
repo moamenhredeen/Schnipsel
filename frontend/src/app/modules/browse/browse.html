@@ -1,21 +1,28 @@
-<div class="p-8">
-  @if(snippets$ | async; as snippets) { @for(snippet of snippets; track snippet.id) {
-  <mat-card class="p-3" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>Chihuahua</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{snippet.content}}</p>
-    </mat-card-content>
-    <mat-card-footer class="example-card-footer">
-      <mat-chip-set aria-label="Chihuahua traits">
-        <mat-chip>charming</mat-chip>
-        <mat-chip>graceful</mat-chip>
-        <mat-chip>sassy</mat-chip>
-      </mat-chip-set>
-    </mat-card-footer>
-  </mat-card>
-  } } @else{
-  <p>Loading ...</p>
-  }
-</div>
+<mat-drawer-container [hasBackdrop]="false" class="h-screen">
+  <mat-drawer position="end" mode="side" [opened]="sidebarOpened()">
+    <app-create-snippet (onCancel)="sidebarOpened.set(false)"></app-create-snippet>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="flex p-4 gap-4">
+      <main class="flex-3 grid gap-4">
+        @if (snippets$ | async; as snippets) {
+          @for (snippet of snippets; track snippet.id) {
+            <app-snippet [value]="snippet" />
+          }
+        } @else {
+          <p>Loading ...</p>
+        }
+      </main>
+
+      <div class="fixed right-8 bottom-8">
+        <button matFab extended (click)="openSidebar()">
+          <mat-icon>add</mat-icon>
+          Snippet
+        </button>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+

@@ -1,0 +1,33 @@
+<div class="flex flex-col h-full">
+  <mat-toolbar class="primary-toolbar">
+    <button
+      matIconButton
+      aria-label="Example icon-button with heart icon"
+      (click)="sidebarOpen.set(!sidebarOpen())"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Kakera</span>
+    <span class="w-full"></span>
+    <button matIconButton (click)="toggleTheme()">
+      <mat-icon>{{theme()}}</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="h-full">
+    <mat-sidenav class="p-2" mode="side" [opened]="sidebarOpen()">
+      <mat-nav-list class="nav-items">
+        @for (navItem of navItems; track navItem.url) {
+          <mat-list-item class="my-2" [routerLink]="navItem.url" [activated]="isActive(navItem.url)">
+            <mat-icon matListItemIcon>{{navItem.icon}}</mat-icon>
+            <span matListItemTitle>{{ navItem.label }}</span>
+          </mat-list-item>
+        }
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+

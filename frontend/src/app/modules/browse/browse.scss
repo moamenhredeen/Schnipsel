@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+:host {
+  @include mat.sidenav-overrides((
+    container-shape: 0,
+    //container-background-color: var(--mat-sys-surface-container),
+    //container-elevation-shadow: var(--mat-sys-elevation-2),
+    //container-width: 400px,
+    container-divider-color: var(--mat-sys-outline-variant)
+  ));
+}

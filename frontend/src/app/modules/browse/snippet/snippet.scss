@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+
+:host {
+  @include mat.card-overrides((
+    subtitle-text-weight: normal,
+    subtitle-text-color: var(--mat-sys-on-surface)
+  ));
+
+  @include mat.chips-overrides((
+    outline-width: 0,
+    elevated-container-color: var(--mat-sys-surface-container)
+  ));
+}
