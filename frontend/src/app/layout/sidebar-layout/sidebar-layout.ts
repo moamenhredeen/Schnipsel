@@ -38,7 +38,6 @@ export class SidebarLayout {
     {label: 'Browse', url: 'browse', icon: 'home'},
     {label: 'Saved', url: 'saved', icon: 'bookmark'},
     {label: 'Profile', url: 'profile', icon: 'person'},
-    {label: 'Settings', url: 'settings', icon: 'settings'},
   ];
   sidebarOpen = signal(true);
 

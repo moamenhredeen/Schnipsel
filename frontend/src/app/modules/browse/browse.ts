@@ -5,6 +5,8 @@ import {Snippet} from './snippet/snippet';
 import {MatIcon} from '@angular/material/icon';
 import {MatFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
+import { MatList, MatListItem } from "@angular/material/list";
+import { MatCard, MatCardHeader, MatCardContent, MatCardTitle } from "@angular/material/card";
 
 @Component({
   selector: 'app-browse',
@@ -16,7 +18,13 @@ import {RouterLink} from '@angular/router';
     MatIcon,
     MatFabButton,
     RouterLink,
-  ],
+    MatList,
+    MatListItem,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardTitle
+],
 })
 export class Browse implements OnInit {
   private snippetService = inject(SnippetService);

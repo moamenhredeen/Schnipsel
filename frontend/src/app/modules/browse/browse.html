@@ -1,5 +1,5 @@
-<div class="flex p-4 gap-4">
-  <main class="flex-3 grid gap-4">
+<div class="flex justify-between gap-4 p-8">
+  <main class="max-w-200 m-auto flex-3 grid gap-4">
     @if (snippets$ | async; as snippets) {
       @for (snippet of snippets; track snippet.id) {
         <app-snippet [value]="snippet" />
@@ -8,6 +8,39 @@
       <p>Loading ...</p>
     }
   </main>
+  <aside class="w-80 relative hidden xl:block">
+    <div class="w-full sticky h-fit top-4 flex flex-col gap-3">
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>Popular Tags</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>Popular Tags</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+            <mat-list-item>#aösldfkasöd</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </aside>
 
   <div class="fixed right-8 bottom-8">
     <button matFab extended [routerLink]="['/snippet/edit']">
