@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@import 'prismjs/themes/prism-solarizedlight.css';
 
 @font-face {
   font-family: InterVariable;
@@ -45,4 +46,11 @@ body {
 body {
   margin: 0;
   font-family: InterVariable, 'Helvetica Neue', sans-serif;
+}
+
+
+
+/* angular material overrides */
+.mdc-list {
+  padding: 0 !important;
 }

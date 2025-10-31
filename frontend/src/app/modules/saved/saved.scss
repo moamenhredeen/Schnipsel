@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+:host {
+  @include mat.sidenav-overrides((
+    container-shape: 0,
+    container-divider-color: var(--mat-sys-outline-variant),
+    container-width: 50%
+  ));
+
+  @include mat.list-overrides((
+    active-indicator-shape: 0,
+    list-item-container-shape: 0
+  ));
+
+  @include mat.chips-overrides((
+    container-shape-radius: 25px,
+    elevated-container-color: var(--mat-sys-surface-container),
+    outline-width: 0
+  ));
+}
+

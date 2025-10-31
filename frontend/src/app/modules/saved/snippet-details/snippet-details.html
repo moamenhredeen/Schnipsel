@@ -1,0 +1,15 @@
+
+@if(snippet.error()){
+
+}@else if (snippet.isLoading()) {
+    loading ...
+}@else {
+    <div class="flex justify-between items-center p-2 border-b border-outline-variant">
+        <h1 class="text-xl">{{snippet.value()?.title}}</h1>
+        <button matIconButton [routerLink]="['../']">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <pre><code>{{snippet.value()?.content}}</code></pre>
+}

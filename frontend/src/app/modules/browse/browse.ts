@@ -4,9 +4,7 @@ import {AsyncPipe} from '@angular/common';
 import {Snippet} from './snippet/snippet';
 import {MatIcon} from '@angular/material/icon';
 import {MatFabButton} from '@angular/material/button';
-import {MatDialog} from '@angular/material/dialog';
-import {CreateSnippet} from './create-snippet/create-snippet';
-import {MatDrawer, MatDrawerContainer, MatDrawerContent} from '@angular/material/sidenav';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-browse',
@@ -17,23 +15,15 @@ import {MatDrawer, MatDrawerContainer, MatDrawerContent} from '@angular/material
     Snippet,
     MatIcon,
     MatFabButton,
-    MatDrawerContainer,
-    MatDrawer,
-    MatDrawerContent,
-    CreateSnippet,
+    RouterLink,
   ],
 })
 export class Browse implements OnInit {
   private snippetService = inject(SnippetService);
 
   snippets$ = this.snippetService.snippets$;
-  sidebarOpened = signal(false)
 
   ngOnInit(): void {
     this.snippetService.getSnippets().subscribe();
-  }
-
-  openSidebar() {
-    this.sidebarOpened.set(true);
   }
 }

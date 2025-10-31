@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {SidebarLayout} from './layout/sidebar-layout/sidebar-layout';
+import { SnippetDetails } from './modules/saved/snippet-details/snippet-details';
 
 export const routes: Routes = [
   {
@@ -12,7 +13,13 @@ export const routes: Routes = [
       },
       {
         path: 'saved',
-        loadComponent: () => import('./modules/saved/saved').then(c => c.Saved)
+        loadComponent: () => import('./modules/saved/saved').then(c => c.Saved),
+        children: [
+          {
+            path: ':id',
+            loadComponent: () => import('./modules/saved/snippet-details/snippet-details').then(c => c.SnippetDetails),
+          }
+        ]
       },
       {
         path: 'profile',
@@ -36,10 +43,5 @@ export const routes: Routes = [
         loadComponent: () => import('./modules/snippet-editor/snippet-editor').then(c => c.SnippetEditor)
       },
     ]
-  },
-  {
-    path: '**',
-    redirectTo: 'browse',
-    pathMatch: 'full'
   }
 ];

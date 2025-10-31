@@ -1,1 +1,16 @@
-<p>snippet-editor works!</p>
+<code-editor #editor
+             [style.height]="'500px'"
+             [(ngModel)]="code"
+             (ngModelChange)="log($event)"
+             [theme]="options.theme"
+             [setup]="options.setup"
+             [disabled]="options.disabled"
+             [readonly]="options.readonly"
+             [placeholder]="options.placeholder"
+             [indentWithTab]="options.indentWithTab"
+             [indentUnit]="options.indentUnit"
+             [lineWrapping]="options.lineWrapping"
+             [highlightWhitespace]="options.highlightWhitespace"
+             [language]="options.language"
+             [languages]="options.languages"
+/>

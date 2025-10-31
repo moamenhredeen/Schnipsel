@@ -3,7 +3,7 @@
 :host {
   @include mat.card-overrides((
     subtitle-text-weight: normal,
-    subtitle-text-color: var(--mat-sys-on-surface)
+    subtitle-text-color: var(--mat-sys-on-surface),
   ));
 
   @include mat.chips-overrides((

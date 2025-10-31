@@ -1,1 +1,5 @@
-<p>snippet-viewer works!</p>
+@if (snippet()) {
+  <pre><code [innerHTML]="colorize(snippet()?.content ?? '')"></code></pre>
+} @else {
+  Loading ...
+}

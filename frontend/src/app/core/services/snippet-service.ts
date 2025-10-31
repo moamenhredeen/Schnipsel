@@ -1,26 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, from, Observable, tap } from 'rxjs';
+import { BehaviorSubject, delay, from, Observable, tap } from 'rxjs';
 import {ISnippet} from '$core/types/snippet';
 
-
-@Injectable({
-  providedIn: 'root',
-})
-export class SnippetService {
-  private snippetsSubject = new BehaviorSubject<ISnippet[]>([]);
-
-  get snippets$(): Observable<ISnippet[]> {
-    return this.snippetsSubject.asObservable();
-  }
-
-  getSnippets(): Observable<ISnippet[]> {
-    return from([
-      [
+const dummySnippets =   [
       {
         id: 1,
         title: `Printing`,
         description: `This is how easy to print something in python`,
         content: 'println("hello world")',
+        language: 'javascript',
         tags: [
           {id: 1, name: 'problem-solving'}
         ],
@@ -33,9 +21,10 @@ export class SnippetService {
 
       },
       {
-        id: 1,
+        id: 2,
         title: `Printing`,
         description: `This is how easy to print something in python`,
+        language: 'python',
         content: `
           #! /usr/bin/python
 
@@ -53,9 +42,10 @@ export class SnippetService {
         },
       },
       {
-        id: 1,
+        id: 3,
         title: `Printing`,
         description: `This is how easy to print something in python`,
+        language: 'html',
         content: `
 <mat-card class="p-3" appearance="outlined">
   <mat-card-header>
@@ -102,9 +92,10 @@ export class SnippetService {
         },
       },
       {
-        id: 1,
+        id: 4,
         title: `Printing`,
         description: `This is how easy to print something in python`,
+        language: 'python',
         content: `
           #! /usr/bin/python
 
@@ -122,20 +113,19 @@ export class SnippetService {
         },
       },
       {
-        id: 1,
+        id: 5,
         title: `Printing`,
         description: `This is how easy to print something in python`,
+        language: 'javascript',
         content: `
-          #! /usr/bin/python
+          // this is how easy to print something in python
+          console.log('hello world')
 
-          # this is how easy to print something in python
-          print('hello world')
+          // this is how easy to print something in python
+          console.log('hello world')
 
-          # this is how easy to print something in python
-          print('hello world')
-
-          # this is how easy to print something in python
-          print('hello world')
+          // this is how easy to print something in python
+          console.log('hello world')
           `,
         tags: [
           {id: 1, name: 'problem-solving'}
@@ -147,48 +137,28 @@ export class SnippetService {
           image_url: '/images/avatar.png',
         },
       }
-      ],
-    ]).pipe(tap((res) => this.snippetsSubject.next(res)));
+    ]
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SnippetService {
+  private snippetsSubject = new BehaviorSubject<ISnippet[]>([]);
+
+  get snippets$(): Observable<ISnippet[]> {
+    return this.snippetsSubject.asObservable();
+  }
+
+  getSnippets(): Observable<ISnippet[]> {
+    return from([dummySnippets]).pipe(
+      delay(1000),
+      tap((res) => this.snippetsSubject.next(res)));
   }
 
   getSnippetById(id: number): Observable<ISnippet> {
+    const s: ISnippet = dummySnippets.filter(el => el.id === id)[0]
     return from([
-      {
-        id: 1,
-        title: `Printing`,
-        description: `This is how easy to print something in python`,
-        content: 'println("hello world")',
-        tags: [
-          {id: 1, name: 'problem-solving'}
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
-        },
-
-      },
-      {
-        id: 1,
-        title: `Printing`,
-        description: `This is how easy to print something in python`,
-        content: `
-          #! /usr/bin/python
-
-          # this is how easy to print something in python
-          print('hello world')
-          `,
-        tags: [
-          {id: 1, name: 'problem-solving'}
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
-        },
-      },
-    ]);
+      s
+    ]).pipe(delay(1000));
   }
 }

@@ -8,5 +8,6 @@ export type ISnippet = {
   author: IUser;
   tags: ITag[];
   content: string;
+  language: string;
 };
 

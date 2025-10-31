@@ -15,8 +15,8 @@
     </div>
   </mat-card-header>
   <mat-card-content>
-    <div class="flex gap-2 items-start">
-      <div class="flex flex-col items-center gap-1 p-1 bg-surface-container rounded-full">
+    <div class="flex gap-2">
+      <div class="flex flex-col items-center gap-1 p-1 bg-surface-container rounded-full self-start">
         <button matIconButton>
           <mat-icon>keyboard_arrow_up</mat-icon>
         </button>
@@ -25,7 +25,7 @@
           <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
       </div>
-      <pre><code>{{ value().content }}</code></pre>
+      <pre class="bg-surface-container-low flex-1 rounded-2xl p-2"><code [innerHTML]="colorize(value().content)"></code></pre>
     </div>
   </mat-card-content>
   <mat-card-footer class="m-4">

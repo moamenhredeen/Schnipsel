@@ -48,7 +48,7 @@ export class SidebarLayout {
 
   isActive(url: string): boolean {
     return this.router.isActive(url, {
-      paths: "exact",
+      paths: "subset",
       matrixParams: 'ignored',
       queryParams: 'ignored',
       fragment: 'ignored'
