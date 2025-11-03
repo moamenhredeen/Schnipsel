@@ -1,6 +1,5 @@
 package me.moamenhredeen.kakera.endpoints;
 
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;

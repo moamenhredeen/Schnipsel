@@ -3,7 +3,6 @@ package me.moamenhredeen.kakera.services;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import me.moamenhredeen.kakera.dto.RegisterRequestDto;
 import me.moamenhredeen.kakera.entities.User;
 
 @ApplicationScoped

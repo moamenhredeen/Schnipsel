@@ -31,5 +31,4 @@ public class AuthResource {
     public Response login(LoginRequestDto loginRequestDto) {
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
-
 }
