@@ -808,3 +808,199 @@
     transform: translateY(100%);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Panel Header Responsive Adjustments */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile: Panel headers with reduced padding */
+@media (max-width: 767px) {
+  .flex-shrink-0.px-5.py-4 {
+    padding: 12px 16px !important;
+
+    h3 {
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    span {
+      font-size: 10px;
+      padding: 4px 8px !important;
+    }
+  }
+
+  /* Drawer panel content: Better mobile spacing */
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 12px 16px;
+
+    > div {
+      gap: 12px;
+    }
+  }
+
+  /* Info panel: Optimize for mobile */
+  .flex-col.flex-1.overflow-y-auto {
+    p {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .text-sm {
+      font-size: 13px;
+    }
+
+    .text-xs {
+      font-size: 11px;
+    }
+  }
+
+  /* Author section: Better on mobile */
+  .flex.items-center.gap-3 {
+    gap: 12px;
+
+    .min-w-0.flex-1 {
+      min-width: 0;
+
+      p {
+        word-break: break-word;
+      }
+    }
+  }
+
+  /* Tags: Better wrapping on mobile */
+  .flex.flex-wrap.gap-2 {
+    gap: 8px;
+
+    .mat-mdc-chip {
+      max-width: 100%;
+    }
+  }
+}
+
+/* Tablet: Panel headers with balanced padding */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .flex-shrink-0.px-5.py-4 {
+    padding: 14px 16px !important;
+
+    h3 {
+      font-size: 12px;
+    }
+
+    span {
+      font-size: 11px;
+      padding: 5px 10px !important;
+    }
+  }
+
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 14px;
+
+    > div {
+      gap: 14px;
+    }
+  }
+}
+
+/* Desktop: Panel headers with full spacing */
+@media (min-width: 1024px) {
+  .flex-shrink-0.px-5.py-4 {
+    padding: 16px 20px !important;
+
+    h3 {
+      font-size: 13px;
+    }
+
+    span {
+      font-size: 12px;
+      padding: 6px 12px !important;
+    }
+  }
+
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 24px;
+
+    > div {
+      gap: 20px;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Explanation List Items Responsive */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* Explanation items: Compact on mobile */
+  .px-5.py-4.border-b {
+    padding: 12px 16px !important;
+
+    .flex.items-start.gap-2-5 {
+      gap: 10px;
+
+      span {
+        font-size: 12px;
+
+        &:first-child {
+          min-width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    p {
+      font-size: 12px;
+      margin-left: 34px;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .px-5.py-4.border-b {
+    padding: 12px !important;
+
+    p {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .px-5.py-4.border-b {
+    padding: 12px 16px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Comments Section Responsive */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* Comment items: Optimized for mobile */
+  .px-5.py-4.border-b.last-border-b-0 {
+    padding: 12px 16px !important;
+
+    .flex.items-start.gap-3 {
+      gap: 10px;
+
+      .min-w-0.flex-1 {
+        p {
+          font-size: 12px;
+          word-break: break-word;
+        }
+      }
+    }
+
+    .w-8.h-8 {
+      min-width: 32px;
+      height: 32px;
+      font-size: 11px;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .px-5.py-4.border-b.last-border-b-0 {
+    padding: 12px 16px !important;
+  }
+}
