@@ -15,7 +15,6 @@ import { ISnippet, IComment } from '$core/types/snippet';
 import { MatChip } from '@angular/material/chips';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
-import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import {
@@ -66,15 +65,7 @@ const highlightField = StateField.define<DecorationSet>({
 
 @Component({
   selector: 'app-snippet-viewer',
-  imports: [
-    CommonModule,
-    MatChip,
-    MatIcon,
-    MatIconButton,
-    MatTooltip,
-    MatProgressSpinner,
-    MatTabsModule,
-  ],
+  imports: [CommonModule, MatChip, MatIcon, MatIconButton, MatProgressSpinner, MatTabsModule],
   templateUrl: './snippet-viewer.html',
   styleUrl: './snippet-viewer.scss',
 })

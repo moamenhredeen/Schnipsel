@@ -1,318 +1,301 @@
-<div
-  class="h-full w-full flex flex-col bg-surface overflow-hidden"
-  *ngIf="!error(); else errorState"
->
-  <div *ngIf="snippet(); else loading" class="w-full h-full flex relative">
-    <!-- Left Column: Code Editor (Full) -->
-    <div class="flex-1 flex flex-col h-full overflow-hidden bg-surface relative">
-      <!-- Code Display with CodeMirror (Full Height) -->
-      <div class="flex-1 overflow-hidden bg-surface" #codeEditor></div>
+<div class="h-full w-full flex flex-col bg-surface overflow-hidden">
+  <div *ngIf="error(); else mainContent" class="flex items-center justify-center h-full">
+    <div class="flex flex-col items-center gap-4 p-8 text-center max-w-sm">
+      <mat-icon class="text-4xl text-on-surface-variant opacity-30">error_outline</mat-icon>
+      <h2 class="m-0 text-base font-normal text-on-surface">{{ error() }}</h2>
+      <p class="m-0 text-sm text-on-surface-variant opacity-50">Could not load snippet</p>
     </div>
+  </div>
 
-    <!-- Right Drawer: Info & Explanations -->
-    <div
-      class="drawer flex h-full bg-surface overflow-hidden border-l border-outline-variant/30 transition-all duration-300 ease-in-out"
-      [class.drawer-open]="isDrawerOpen()"
-      [class.drawer-closed]="!isDrawerOpen()"
-    >
-      <!-- Info Panel -->
-      <div class="flex-1 flex flex-col h-full overflow-hidden" *ngIf="activePanel() === 'info'">
-        <div class="flex-shrink-0 px-5 py-4 border-b border-outline-variant/30">
-          <h3 class="text-sm font-bold m-0 text-on-surface uppercase tracking-wide">Info</h3>
+  <ng-template #mainContent>
+    <div *ngIf="snippet(); else loading" class="w-full h-full flex flex-col relative">
+      <div class="flex-1 flex overflow-hidden">
+        <div class="flex-1 flex flex-col h-full overflow-hidden bg-surface relative">
+          <div class="flex-1 overflow-hidden bg-surface" #codeEditor></div>
         </div>
-        <div class="flex flex-col flex-1 overflow-y-auto p-5 gap-4">
-          <!-- Title & Actions -->
-          <div class="flex flex-col gap-3">
-            <h2 class="text-base font-bold m-0 text-on-surface">{{ snippet()?.title }}</h2>
-            <div class="flex items-center gap-2">
-              <div
-                class="px-2.5 py-1 bg-primary/10 text-primary rounded-md text-xs font-semibold uppercase border border-primary/30"
-              >
-                {{ snippet()?.language }}
-              </div>
-            </div>
-            <div class="flex gap-2 pt-2 border-t border-surface-dim/50">
-              <button
-                mat-icon-button
-                matTooltip="Copy code"
-                (click)="copyCode()"
-                class="flex-1 text-on-surface-variant hover:text-primary transition-colors opacity-70 hover:opacity-100 flex items-center justify-center gap-2"
-              >
-                <mat-icon class="text-sm">content_copy</mat-icon>
-                <span class="text-xs font-medium">Copy</span>
-              </button>
-              <button
-                mat-icon-button
-                matTooltip="Save snippet"
-                (click)="saveSnippet()"
-                class="flex-1 text-on-surface-variant hover:text-primary transition-colors opacity-70 hover:opacity-100 flex items-center justify-center gap-2"
-              >
-                <mat-icon class="text-sm">bookmark_outline</mat-icon>
-                <span class="text-xs font-medium">Save</span>
-              </button>
-            </div>
-          </div>
 
-          <!-- Description -->
-          <div *ngIf="snippet()?.description" class="pt-2 border-t border-surface-dim/50">
-            <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-2">
-              Description
-            </p>
-            <p class="text-sm m-0 text-on-surface-variant leading-relaxed">
-              {{ snippet()?.description }}
-            </p>
-          </div>
-
-          <!-- Author -->
-          <div *ngIf="snippet()?.author" class="pt-2 border-t border-surface-dim/50">
-            <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">
-              Author
-            </p>
-            <div class="flex items-start gap-3">
-              <div
-                class="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-primary/10 border border-primary/20"
-                *ngIf="snippet()?.author?.image_url"
-              >
-                <img
-                  [src]="snippet()?.author?.image_url"
-                  [alt]="snippet()?.author?.name"
-                  class="w-full h-full object-cover"
-                />
-              </div>
-              <div class="min-w-0 flex-1">
-                <p class="text-sm font-semibold m-0 text-on-surface">
-                  {{ snippet()?.author?.name }}
-                </p>
-                <p class="text-xs m-0 mt-1 text-on-surface-variant">
-                  {{ snippet()?.author?.email }}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tags -->
-          <div
-            *ngIf="snippet() && snippet()!.tags && snippet()!.tags.length > 0"
-            class="pt-2 border-t border-surface-dim/50"
-          >
-            <p class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3">
-              Tags
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <mat-chip *ngFor="let tag of snippet()!.tags" variant="outlined" class="text-xs h-7">
-                {{ tag.name }}
-              </mat-chip>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Explanations Panel -->
-      <div
-        class="flex-1 flex flex-col h-full overflow-hidden"
-        *ngIf="activePanel() === 'explanations'"
-      >
         <div
-          class="flex-shrink-0 px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between"
+          class="drawer flex h-full bg-surface overflow-hidden border-l border-outline-variant/10 transition-all duration-200 ease-in-out"
+          [class.drawer-open]="isDrawerOpen()"
+          [class.drawer-closed]="!isDrawerOpen()"
         >
-          <h3 class="text-sm font-bold m-0 text-on-surface uppercase tracking-wide">
-            Explanations
-          </h3>
-          <span class="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full font-semibold">
-            {{ snippet()?.explanations?.length ?? 0 }}
-          </span>
-        </div>
-
-        <!-- Empty State -->
-        <div
-          class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-on-surface-variant text-center flex-1"
-          *ngIf="!snippet()?.explanations || snippet()?.explanations?.length === 0"
-        >
-          <div class="w-12 h-12 rounded-lg bg-surface/50 flex items-center justify-center">
-            <mat-icon class="text-2xl opacity-40">note</mat-icon>
-          </div>
-          <p class="text-sm m-0 font-medium">No explanations yet</p>
-        </div>
-
-        <!-- Explanations List -->
-        <div
-          class="flex-1 overflow-y-auto"
-          *ngIf="snippet()?.explanations && (snippet()!.explanations?.length ?? 0) > 0"
-        >
-          <ng-container
-            *ngFor="let exp of snippet()?.explanations; let i = index; trackBy: trackByExpId"
-          >
-            <div
-              class="px-5 py-4 border-b border-surface-dim/50 last:border-b-0 transition-all duration-300 hover:bg-surface/50 cursor-pointer group"
-              (mouseenter)="onExplanationHover(exp)"
-              (mouseleave)="onExplanationLeave()"
-            >
+          <div class="flex-1 flex flex-col h-full overflow-hidden" *ngIf="activePanel() === 'info'">
+            <div class="flex flex-col flex-1 overflow-y-auto p-6 gap-8">
               <!-- Title -->
-              <div class="flex items-start gap-2.5 mb-2">
-                <span
-                  class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/80 text-on-primary text-xs font-bold flex-shrink-0"
-                >
-                  {{ padStartIndex(i) }}
-                </span>
-                <span
-                  class="flex-1 text-sm font-semibold text-on-surface break-words group-hover:text-primary transition-colors"
-                  >{{ exp.title }}</span
-                >
+              <div>
+                <h2 class="text-base font-normal m-0 text-on-surface mb-3 leading-relaxed">
+                  {{ snippet()?.title }}
+                </h2>
+                <div class="flex items-center gap-4 text-xs text-on-surface-variant opacity-50">
+                  <span>{{ snippet()?.language }}</span>
+                  <span>·</span>
+                  <span>{{ codeLines().length }} lines</span>
+                </div>
               </div>
 
               <!-- Description -->
-              <p class="text-xs text-on-surface-variant line-clamp-3 m-0 mt-1.5 ml-8">
-                {{ exp.description }}
+              <p
+                *ngIf="snippet()?.description"
+                class="text-sm m-0 text-on-surface-variant opacity-60 leading-loose"
+              >
+                {{ snippet()?.description }}
               </p>
 
-              <!-- Meta -->
-              <div
-                class="flex items-center gap-2 mt-2.5 ml-8 text-xs text-primary/80 font-medium"
-                *ngIf="exp.lineNumber || exp.startLine"
-              >
-                <mat-icon class="text-xs">code</mat-icon>
-                <span>
-                  Line
-                  <span *ngIf="exp.startLine && exp.endLine" class="font-semibold">
-                    {{ exp.startLine }}-{{ exp.endLine }}
-                  </span>
-                  <span *ngIf="exp.lineNumber && !exp.startLine" class="font-semibold"
-                    >{{ exp.lineNumber }}</span
-                  >
-                </span>
+              <!-- Author -->
+              <div *ngIf="snippet()?.author" class="flex items-center gap-3">
+                <div
+                  class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-outline-variant/10"
+                  *ngIf="snippet()?.author?.image_url"
+                >
+                  <img
+                    [src]="snippet()?.author?.image_url"
+                    [alt]="snippet()?.author?.name"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="min-w-0 flex-1">
+                  <p class="text-sm font-normal m-0 text-on-surface">
+                    {{ snippet()?.author?.name }}
+                  </p>
+                  <p class="text-xs m-0 text-on-surface-variant opacity-40">
+                    {{ snippet()?.author?.email }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Tags -->
+              <div *ngIf="snippet() && snippet()!.tags && snippet()!.tags.length > 0">
+                <div class="flex flex-wrap gap-2">
+                  <mat-chip *ngFor="let tag of snippet()!.tags" variant="outlined">
+                    {{ tag.name }}
+                  </mat-chip>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex gap-2 pt-4 mt-auto border-t border-outline-variant/10">
+                <button
+                  mat-icon-button
+                  (click)="copyCode()"
+                  class="flex-1 h-10 text-on-surface-variant opacity-30 hover:opacity-100 flex items-center justify-center gap-2 border border-outline-variant/20"
+                >
+                  <mat-icon class="text-sm">content_copy</mat-icon>
+                  <span class="text-xs">Copy</span>
+                </button>
+                <button
+                  mat-icon-button
+                  (click)="saveSnippet()"
+                  class="flex-1 h-10 text-on-surface-variant opacity-30 hover:opacity-100 flex items-center justify-center gap-2 border border-outline-variant/20"
+                >
+                  <mat-icon class="text-sm">bookmark_outline</mat-icon>
+                  <span class="text-xs">Save</span>
+                </button>
               </div>
             </div>
-          </ng-container>
-        </div>
-      </div>
-
-      <!-- Comments Panel -->
-      <div class="flex-1 flex flex-col h-full overflow-hidden" *ngIf="activePanel() === 'comments'">
-        <div
-          class="flex-shrink-0 px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between"
-        >
-          <h3 class="text-sm font-bold m-0 text-on-surface uppercase tracking-wide">Comments</h3>
-          <span class="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full font-semibold">
-            {{ comments().length }}
-          </span>
-        </div>
-
-        <!-- Empty State -->
-        <div
-          class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-on-surface-variant text-center flex-1"
-          *ngIf="comments().length === 0"
-        >
-          <div class="w-12 h-12 rounded-lg bg-surface/50 flex items-center justify-center">
-            <mat-icon class="text-2xl opacity-40">comment</mat-icon>
           </div>
-          <p class="text-sm m-0 font-medium">No comments yet</p>
-          <p class="text-xs m-0 text-on-surface-variant/70">Be the first to comment</p>
-        </div>
 
-        <!-- Comments List -->
-        <div class="flex-1 overflow-y-auto" *ngIf="comments().length > 0">
-          <ng-container *ngFor="let comment of comments()">
+          <!-- Explanations Panel -->
+          <div
+            class="flex-1 flex flex-col h-full overflow-hidden"
+            *ngIf="activePanel() === 'explanations'"
+          >
             <div
-              class="px-5 py-4 border-b border-surface-dim/50 last:border-b-0 transition-all duration-300 hover:bg-surface/50 cursor-pointer group"
-              (mouseenter)="onCommentHover(comment)"
-              (mouseleave)="onCommentLeave()"
+              class="flex-shrink-0 px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between"
             >
-              <div class="flex items-start gap-3 mb-2">
+              <h3 class="text-sm font-bold m-0 text-on-surface uppercase tracking-wide">
+                Explanations
+              </h3>
+              <span class="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full font-semibold">
+                {{ snippet()?.explanations?.length ?? 0 }}
+              </span>
+            </div>
+
+            <!-- Empty State -->
+            <div
+              class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-on-surface-variant text-center flex-1"
+              *ngIf="!snippet()?.explanations || snippet()?.explanations?.length === 0"
+            >
+              <div class="w-12 h-12 rounded-lg bg-surface/50 flex items-center justify-center">
+                <mat-icon class="text-2xl opacity-40">note</mat-icon>
+              </div>
+              <p class="text-sm m-0 font-medium">No explanations yet</p>
+            </div>
+
+            <!-- Explanations List -->
+            <div
+              class="flex-1 overflow-y-auto"
+              *ngIf="snippet()?.explanations && (snippet()!.explanations?.length ?? 0) > 0"
+            >
+              <ng-container
+                *ngFor="let exp of snippet()?.explanations; let i = index; trackBy: trackByExpId"
+              >
                 <div
-                  class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
+                  class="px-5 py-4 border-b border-surface-dim/50 last:border-b-0 transition-all duration-300 hover:bg-surface/50 cursor-pointer group"
+                  (mouseenter)="onExplanationHover(exp)"
+                  (mouseleave)="onExplanationLeave()"
                 >
-                  <span class="text-xs font-semibold text-primary"
-                    >{{ comment.author.charAt(0).toUpperCase() }}</span
-                  >
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 mb-1">
-                    <span class="text-sm font-semibold text-on-surface">{{ comment.author }}</span>
-                    <span class="text-xs text-on-surface-variant"
-                      >{{ comment.createdAt | date: 'short' }}</span
+                  <!-- Title -->
+                  <div class="flex items-start gap-2.5 mb-2">
+                    <span
+                      class="flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/80 text-on-primary text-xs font-bold flex-shrink-0"
+                    >
+                      {{ padStartIndex(i) }}
+                    </span>
+                    <span
+                      class="flex-1 text-sm font-semibold text-on-surface break-words group-hover:text-primary transition-colors"
+                      >{{ exp.title }}</span
                     >
                   </div>
-                  <p class="text-sm text-on-surface-variant m-0 leading-relaxed mb-2">
-                    {{ comment.text }}
+
+                  <!-- Description -->
+                  <p class="text-xs text-on-surface-variant line-clamp-3 m-0 mt-1.5 ml-8">
+                    {{ exp.description }}
                   </p>
 
-                  <!-- Code Region Info -->
+                  <!-- Meta -->
                   <div
-                    class="flex items-center gap-1.5 text-xs text-primary/80 font-medium"
-                    *ngIf="comment.codeRegion"
+                    class="flex items-center gap-2 mt-2.5 ml-8 text-xs text-primary/80 font-medium"
+                    *ngIf="exp.lineNumber || exp.startLine"
                   >
                     <mat-icon class="text-xs">code</mat-icon>
                     <span>
-                      Lines {{ comment.codeRegion.startLine }}-{{ comment.codeRegion.endLine }}
+                      Line
+                      <span *ngIf="exp.startLine && exp.endLine" class="font-semibold">
+                        {{ exp.startLine }}-{{ exp.endLine }}
+                      </span>
+                      <span *ngIf="exp.lineNumber && !exp.startLine" class="font-semibold"
+                        >{{ exp.lineNumber }}</span
+                      >
                     </span>
                   </div>
                 </div>
-              </div>
+              </ng-container>
             </div>
-          </ng-container>
+          </div>
+
+          <!-- Comments Panel -->
+          <div
+            class="flex-1 flex flex-col h-full overflow-hidden"
+            *ngIf="activePanel() === 'comments'"
+          >
+            <div
+              class="flex-shrink-0 px-5 py-4 border-b border-outline-variant/30 flex items-center justify-between"
+            >
+              <h3 class="text-sm font-bold m-0 text-on-surface uppercase tracking-wide">
+                Comments
+              </h3>
+              <span class="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full font-semibold">
+                {{ comments().length }}
+              </span>
+            </div>
+
+            <!-- Empty State -->
+            <div
+              class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-on-surface-variant text-center flex-1"
+              *ngIf="comments().length === 0"
+            >
+              <div class="w-12 h-12 rounded-lg bg-surface/50 flex items-center justify-center">
+                <mat-icon class="text-2xl opacity-40">comment</mat-icon>
+              </div>
+              <p class="text-sm m-0 font-medium">No comments yet</p>
+              <p class="text-xs m-0 text-on-surface-variant/70">Be the first to comment</p>
+            </div>
+
+            <!-- Comments List -->
+            <div class="flex-1 overflow-y-auto" *ngIf="comments().length > 0">
+              <ng-container *ngFor="let comment of comments()">
+                <div
+                  class="px-5 py-4 border-b border-surface-dim/50 last:border-b-0 transition-all duration-300 hover:bg-surface/50 cursor-pointer group"
+                  (mouseenter)="onCommentHover(comment)"
+                  (mouseleave)="onCommentLeave()"
+                >
+                  <div class="flex items-start gap-3 mb-2">
+                    <div
+                      class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
+                    >
+                      <span class="text-xs font-semibold text-primary"
+                        >{{ comment.author.charAt(0).toUpperCase() }}</span
+                      >
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 mb-1">
+                        <span class="text-sm font-semibold text-on-surface"
+                          >{{ comment.author }}</span
+                        >
+                        <span class="text-xs text-on-surface-variant"
+                          >{{ comment.createdAt | date: 'short' }}</span
+                        >
+                      </div>
+                      <p class="text-sm text-on-surface-variant m-0 leading-relaxed mb-2">
+                        {{ comment.text }}
+                      </p>
+
+                      <!-- Code Region Info -->
+                      <div
+                        class="flex items-center gap-1.5 text-xs text-primary/80 font-medium"
+                        *ngIf="comment.codeRegion"
+                      >
+                        <mat-icon class="text-xs">code</mat-icon>
+                        <span>
+                          Lines {{ comment.codeRegion.startLine }}-{{ comment.codeRegion.endLine }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-bar flex flex-col bg-surface border-l border-outline-variant/10">
+          <button
+            mat-icon-button
+            (click)="setActivePanel('info')"
+            [class.active]="activePanel() === 'info' && isDrawerOpen()"
+            class="activity-button"
+          >
+            <mat-icon>info</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="setActivePanel('explanations')"
+            [class.active]="activePanel() === 'explanations' && isDrawerOpen()"
+            class="activity-button"
+          >
+            <mat-icon>lightbulb</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="setActivePanel('comments')"
+            [class.active]="activePanel() === 'comments' && isDrawerOpen()"
+            class="activity-button"
+          >
+            <mat-icon>comment</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Status Bar -->
+      <div
+        class="flex items-center justify-between h-8 px-4 bg-surface-container border-t border-outline-variant/20"
+      >
+        <div class="flex items-center gap-6 text-xs text-on-surface-variant">
+          <span class="font-medium">{{ snippet()?.language }}</span>
+          <span class="opacity-70">UTF-8</span>
+          <span class="opacity-70">Spaces: 2</span>
+        </div>
+        <div class="flex items-center gap-6 text-xs text-on-surface-variant">
+          <span class="opacity-70">Lines: {{ codeLines().length }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Activity Bar (VS Code style) -->
-    <div class="activity-bar flex flex-col bg-surface-container border-l border-outline-variant/30">
-      <button
-        mat-icon-button
-        (click)="setActivePanel('info')"
-        [class.active]="activePanel() === 'info' && isDrawerOpen()"
-        class="activity-button"
-        matTooltip="Info"
-        matTooltipPosition="left"
-      >
-        <mat-icon>info</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        (click)="setActivePanel('explanations')"
-        [class.active]="activePanel() === 'explanations' && isDrawerOpen()"
-        class="activity-button"
-        matTooltip="Explanations"
-        matTooltipPosition="left"
-      >
-        <mat-icon>lightbulb</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        (click)="setActivePanel('comments')"
-        [class.active]="activePanel() === 'comments' && isDrawerOpen()"
-        class="activity-button"
-        matTooltip="Comments"
-        matTooltipPosition="left"
-      >
-        <mat-icon>comment</mat-icon>
-      </button>
-    </div>
-  </div>
-
-  <ng-template #loading>
-    <div
-      class="flex flex-col items-center justify-center gap-5 h-full p-10 text-on-surface-variant"
-    >
-      <div class="relative w-12 h-12">
-        <mat-spinner diameter="48"></mat-spinner>
+    <ng-template #loading>
+      <div class="flex flex-col items-center justify-center gap-4 h-full text-on-surface-variant">
+        <mat-spinner diameter="32"></mat-spinner>
+        <p class="text-sm m-0 opacity-30">Loading...</p>
       </div>
-      <p class="text-base font-medium m-0">Loading snippet...</p>
-    </div>
+    </ng-template>
   </ng-template>
 </div>
-
-<ng-template #errorState>
-  <div class="flex items-center justify-center h-full p-5 bg-surface">
-    <div
-      class="flex flex-col items-center gap-4 p-8 bg-surface-container rounded-xl border border-outline-variant/20 text-center max-w-sm"
-    >
-      <div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center">
-        <mat-icon class="text-4xl text-error">error_outline</mat-icon>
-      </div>
-      <h2 class="m-0 text-2xl font-bold text-on-surface">{{ error() }}</h2>
-      <p class="m-0 text-sm text-on-surface-variant leading-relaxed">
-        The snippet could not be loaded. Please try again or go back.
-      </p>
-    </div>
-  </div>
-</ng-template>
