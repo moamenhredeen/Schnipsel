@@ -11,38 +11,47 @@
   .cm-editor {
     height: 100%;
     background-color: var(--mat-sys-surface);
-    font-family: 'Courier New', 'Monaco', monospace;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+    border-radius: 0;
   }
 
   .cm-gutters {
-    background-color: transparent;
-    border-right: 1px solid rgba(0, 0, 0, 0.04);
+    background-color: var(--mat-sys-surface-bright);
+    border-right: 1px solid var(--mat-sys-outline-variant);
+    opacity: 0.8;
     padding: 0;
+    min-width: 48px;
   }
 
   .cm-lineNumber {
-    color: rgba(0, 0, 0, 0.35);
-    min-width: 2.8em;
+    color: var(--mat-sys-on-surface-variant);
+    opacity: 0.6;
+    min-width: 48px;
     padding: 0 8px;
     text-align: right;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 400;
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
   }
 
   .cm-content {
-    font-family: 'Courier New', 'Monaco', monospace;
+    font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
     font-size: 13px;
     line-height: 1.6;
-    padding: 20px 0;
+    padding: 16px 0;
+    letter-spacing: 0;
   }
 
   .cm-line {
-    padding: 0 20px;
+    padding: 0 16px;
     margin: 0;
   }
 
   /* Highlight class for hovered explanation lines */
   .cm-highlight-line {
-    background-color: rgba(233, 30, 99, 0.12) !important;
+    background: linear-gradient(90deg, rgba(233, 30, 99, 0.06) 0%, rgba(233, 30, 99, 0.02) 100%);
+    border-left: 3px solid var(--mat-sys-primary);
+    padding-left: calc(16px - 3px);
 
     .cm-content {
       color: var(--mat-sys-primary);
@@ -51,9 +60,10 @@
   }
 
   .cm-highlight-line .cm-lineNumber {
-    background-color: rgba(233, 30, 99, 0.2) !important;
+    background-color: rgba(233, 30, 99, 0.08);
     color: var(--mat-sys-primary) !important;
     font-weight: 600 !important;
+    opacity: 1;
   }
 
   /* Scrollbar styling */
@@ -70,99 +80,205 @@
     &::-webkit-scrollbar-thumb {
       background: var(--mat-sys-outline-variant);
       border-radius: 4px;
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
 
       &:hover {
+        opacity: 0.6;
         background: var(--mat-sys-outline);
       }
     }
   }
 
-  /* Syntax highlighting colors */
+  /* Syntax highlighting colors - subtle and modern */
   .cm-string {
-    color: #22863a;
+    color: #059669;
+    font-weight: 400;
   }
 
   .cm-number {
-    color: #005cc5;
+    color: #0891b2;
   }
 
   .cm-atom {
-    color: #005cc5;
+    color: #0891b2;
   }
 
   .cm-keyword {
-    color: #d73a49;
+    color: #7c3aed;
+    font-weight: 500;
   }
 
   .cm-variable {
-    color: #24292e;
+    color: var(--mat-sys-on-surface);
   }
 
   .cm-property {
-    color: #24292e;
+    color: var(--mat-sys-on-surface);
   }
 
   .cm-comment {
-    color: #6a737d;
+    color: var(--mat-sys-on-surface-variant);
+    opacity: 0.6;
+    font-style: italic;
   }
 
   .cm-meta {
-    color: #6f42c1;
+    color: #0891b2;
+    opacity: 0.8;
   }
 
   .cm-qualifier {
-    color: #24292e;
+    color: var(--mat-sys-on-surface);
   }
 
   .cm-builtin {
-    color: #d73a49;
+    color: #7c3aed;
+    font-weight: 500;
   }
 
   .cm-bracket {
-    color: #24292e;
+    color: var(--mat-sys-on-surface);
+    opacity: 0.8;
   }
 
   .cm-tag {
-    color: #d73a49;
+    color: #7c3aed;
   }
 
   .cm-attribute {
-    color: #6f42c1;
+    color: #059669;
   }
 
   /* Material Chip styling */
   .mat-mdc-chip-set {
-    gap: 8px;
+    gap: 6px;
   }
 
   .mat-mdc-chip {
-    border-radius: 20px !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--mat-sys-primary) / 30 !important;
+    background-color: var(--mat-sys-primary) / 8 !important;
+    color: var(--mat-sys-primary) !important;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 4px 12px !important;
+
+    &:hover {
+      background-color: var(--mat-sys-primary) / 12 !important;
+      border-color: var(--mat-sys-primary) / 50 !important;
+    }
   }
 
   .mat-mdc-chip.mat-mdc-standard-chip.mat-mdc-chip-selected {
-    background-color: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
+    background-color: var(--mat-sys-primary) / 15 !important;
+    color: var(--mat-sys-primary) !important;
   }
 
   /* Material Button styling */
   .mat-mdc-raised-button {
     min-height: auto;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+  }
+
+  .mat-mdc-stroked-button {
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .mat-mdc-icon-button {
     width: auto;
     height: auto;
-    padding: 4px;
+    padding: 6px;
+    transition: all 0.3s ease;
 
     .mat-icon {
       font-size: inherit;
       width: auto;
       height: auto;
     }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Material Tab styling */
+  .mat-mdc-tab-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mat-mdc-tab-labels {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    gap: 0;
+    background-color: var(--mat-sys-surface);
+  }
+
+  .mat-mdc-tab {
+    min-width: 120px !important;
+    padding: 0 !important;
+
+    .mat-mdc-tab-label-content {
+      padding: 12px 16px !important;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: none;
+    }
+  }
+
+  .mat-mdc-tab.mat-mdc-tab-active {
+    .mat-mdc-tab-label-content {
+      color: var(--mat-sys-primary);
+    }
+  }
+
+  .mat-mdc-tab:not(.mat-mdc-tab-active) {
+    .mat-mdc-tab-label-content {
+      color: var(--mat-sys-on-surface-variant);
+      opacity: 0.7;
+    }
+
+    &:hover {
+      .mat-mdc-tab-label-content {
+        opacity: 0.9;
+        background-color: var(--mat-sys-primary) / 5;
+      }
+    }
+  }
+
+  .mat-mdc-tab-header-pagination {
+    display: none;
+  }
+
+  .mdc-tab-indicator {
+    background-color: var(--mat-sys-primary) !important;
+    height: 2px !important;
+  }
+
+  .mat-mdc-tab-body-wrapper {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* Material Spinner styling */
+  .mat-mdc-progress-spinner {
+    circle {
+      stroke: var(--mat-sys-primary);
+    }
   }
 }
 
-/* Tailwind utilities for color variables */
+/* Main container styling */
 .bg-surface {
   background-color: var(--mat-sys-surface);
 }
@@ -177,6 +293,10 @@
 
 .bg-surface-container-highest {
   background-color: var(--mat-sys-surface-container-highest);
+}
+
+.bg-surface-dim {
+  background-color: var(--mat-sys-surface-dim);
 }
 
 .bg-primary {
@@ -204,5 +324,129 @@
 }
 
 .border-surface-dim {
-  border-color: rgba(0, 0, 0, 0.04);
+  border-color: var(--mat-sys-surface-dim);
+}
+
+/* Smooth transitions */
+.transition-colors {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-all {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gradient utilities */
+.bg-gradient-to-br {
+  background-image: linear-gradient(135deg, var(--tw-gradient-stops));
+}
+
+.from-primary {
+  --tw-gradient-from: var(--mat-sys-primary);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(233, 30, 99, 0));
+}
+
+.from-primary-30 {
+  --tw-gradient-from: rgba(233, 30, 99, 0.3);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(233, 30, 99, 0));
+}
+
+.from-primary-20 {
+  --tw-gradient-from: rgba(233, 30, 99, 0.2);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(233, 30, 99, 0));
+}
+
+.to-primary {
+  --tw-gradient-to: var(--mat-sys-primary);
+}
+
+.to-primary-80 {
+  --tw-gradient-to: rgba(233, 30, 99, 0.8);
+}
+
+.to-primary-10 {
+  --tw-gradient-to: rgba(233, 30, 99, 0.1);
+}
+
+/* Drawer Styles */
+.drawer {
+  width: 400px;
+  max-width: 400px;
+  min-width: 0;
+}
+
+.drawer-open {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.drawer-closed {
+  transform: translateX(100%);
+  opacity: 0;
+  width: 0 !important;
+  border: none !important;
+}
+
+/* Activity Bar (VS Code style) */
+.activity-bar {
+  width: 48px;
+  background-color: var(--mat-sys-surface-container);
+  padding: 8px 0;
+  gap: 4px;
+}
+
+.activity-button {
+  width: 48px !important;
+  height: 48px !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--mat-sys-on-surface-variant);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &:hover {
+    background-color: var(--mat-sys-surface-bright);
+    opacity: 1;
+  }
+
+  &.active {
+    color: var(--mat-sys-primary);
+    opacity: 1;
+    background-color: var(--mat-sys-primary) / 8;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 24px;
+      background-color: var(--mat-sys-primary);
+      border-radius: 0 2px 2px 0;
+    }
+  }
+
+  .mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

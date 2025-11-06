@@ -12,13 +12,21 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SnippetService } from '$core/services/snippet-service';
 import { ISnippet } from '$core/types/snippet';
-import { MatChip, MatChipSet } from '@angular/material/chips';
+import { MatChip } from '@angular/material/chips';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { EditorView, lineNumbers } from '@codemirror/view';
+import { MatTabsModule } from '@angular/material/tabs';
+import {
+  EditorView,
+  lineNumbers,
+  highlightActiveLineGutter,
+  highlightSpecialChars,
+} from '@codemirror/view';
 import { EditorState } from '@codemirror/state';
+import { highlightSelectionMatches } from '@codemirror/search';
+import { defaultHighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
 import { html } from '@codemirror/lang-html';
@@ -37,12 +45,11 @@ export interface IComment {
   imports: [
     CommonModule,
     MatChip,
-    MatChipSet,
     MatIcon,
-    MatButton,
     MatIconButton,
     MatTooltip,
     MatProgressSpinner,
+    MatTabsModule,
   ],
   templateUrl: './snippet-viewer.html',
   styleUrl: './snippet-viewer.scss',
@@ -55,6 +62,8 @@ export class SnippetViewer implements OnInit, AfterViewInit {
   error = signal<string | null>(null);
   highlightedLines = signal<Set<number>>(new Set());
   codeLines = signal<string[]>([]);
+  isDrawerOpen = signal<boolean>(true);
+  activePanel = signal<'info' | 'explanations' | 'comments'>('info');
 
   private editor: EditorView | null = null;
   private snippetService = inject(SnippetService);
@@ -126,7 +135,15 @@ export class SnippetViewer implements OnInit, AfterViewInit {
 
       const state = EditorState.create({
         doc: this.snippet()!.content,
-        extensions: [languageSupport, EditorView.editable.of(false), lineNumbers()],
+        extensions: [
+          languageSupport,
+          syntaxHighlighting(defaultHighlightStyle),
+          EditorView.editable.of(false),
+          lineNumbers(),
+          highlightActiveLineGutter(),
+          highlightSpecialChars(),
+          highlightSelectionMatches(),
+        ],
       });
 
       this.editor = new EditorView({
@@ -232,9 +249,17 @@ export class SnippetViewer implements OnInit, AfterViewInit {
     console.log('Saving snippet:', this.snippet()?.id);
   }
 
-  shareSnippet(): void {
-    // TODO: Implement share functionality
-    console.log('Sharing snippet:', this.snippet()?.id);
+  toggleDrawer(): void {
+    this.isDrawerOpen.set(!this.isDrawerOpen());
+  }
+
+  setActivePanel(panel: 'info' | 'explanations' | 'comments'): void {
+    if (this.activePanel() === panel && this.isDrawerOpen()) {
+      this.isDrawerOpen.set(false);
+    } else {
+      this.activePanel.set(panel);
+      this.isDrawerOpen.set(true);
+    }
   }
 
   trackByExpId(index: number, item: any): string {
