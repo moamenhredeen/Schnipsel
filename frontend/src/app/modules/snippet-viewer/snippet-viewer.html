@@ -20,6 +20,15 @@
           <div class="flex-1 overflow-hidden bg-surface" #codeEditor></div>
         </div>
 
+        <!-- Drawer backdrop: Tap to close drawer on mobile -->
+        <div
+          class="drawer-backdrop"
+          [class.drawer-backdrop-open]="isDrawerOpen()"
+          (click)="toggleDrawer()"
+          [attr.aria-hidden]="!isDrawerOpen()"
+          role="presentation"
+        ></div>
+
         <div
           class="drawer flex h-full bg-surface overflow-hidden border-l border-outline-variant/10 transition-all duration-200 ease-in-out"
           [class.drawer-open]="isDrawerOpen()"
