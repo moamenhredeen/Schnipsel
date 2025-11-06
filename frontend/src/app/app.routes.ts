@@ -35,11 +35,11 @@ export const routes: Routes = [
     path: 'snippet',
     children: [
       {
-        path: 'view',
+        path: 'view/:id',
         loadComponent: () => import('./modules/snippet-viewer/snippet-viewer').then(c => c.SnippetViewer)
       },
       {
-        path: 'edit',
+        path: 'edit/:id',
         loadComponent: () => import('./modules/snippet-editor/snippet-editor').then(c => c.SnippetEditor)
       },
     ]

@@ -1,5 +1,181 @@
-@if (snippet()) {
-  <pre><code [innerHTML]="colorize(snippet()?.content ?? '')"></code></pre>
-} @else {
-  Loading ...
-}
+<div class="h-full w-full flex bg-surface overflow-hidden" *ngIf="!error(); else errorState">
+  <div
+    *ngIf="snippet(); else loading"
+    class="w-full h-full grid grid-cols-2 gap-0 max-lg:grid-cols-1"
+  >
+    <!-- Left Column: Code Display -->
+    <div class="flex flex-col h-full overflow-y-auto border-r border-surface-dim">
+      <!-- Code Header -->
+      <div class="flex-shrink-0 px-6 py-5 flex justify-between items-start gap-4">
+        <div class="flex-1 min-w-0">
+          <h2 class="text-lg font-semibold m-0 text-on-surface">{{ snippet()?.title }}</h2>
+          <p class="text-xs m-0 text-on-surface-variant line-clamp-2">
+            {{ snippet()?.description }}
+          </p>
+        </div>
+        <div
+          class="px-2.5 py-1 bg-primary text-on-primary rounded-full text-xs font-semibold uppercase tracking-wide whitespace-nowrap opacity-90"
+        >
+          {{ snippet()?.language }}
+        </div>
+      </div>
+
+      <!-- Author Info -->
+      <div
+        class="flex-shrink-0 px-6 pb-4 flex justify-between items-center gap-3"
+        *ngIf="snippet()?.author"
+      >
+        <div class="flex gap-3 items-center">
+          <div
+            class="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-surface-container-highest"
+            *ngIf="snippet()?.author?.image_url"
+          >
+            <img
+              [src]="snippet()?.author?.image_url"
+              [alt]="snippet()?.author?.name"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <p class="text-xs font-medium m-0 text-on-surface">{{ snippet()?.author?.name }}</p>
+            <p class="text-xs m-0 mt-0.5 text-on-surface-variant">{{ snippet()?.author?.email }}</p>
+          </div>
+        </div>
+        <button
+          mat-icon-button
+          matTooltip="Copy code"
+          (click)="copyCode()"
+          class="text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity"
+        >
+          <mat-icon class="text-base">content_copy</mat-icon>
+        </button>
+      </div>
+
+      <!-- Code Display with CodeMirror -->
+      <div class="flex-1 overflow-hidden bg-surface" #codeEditor></div>
+
+      <!-- Tags -->
+      <div
+        class="flex-shrink-0 px-6 py-5"
+        *ngIf="snippet() && snippet()!.tags && snippet()!.tags.length > 0"
+      >
+        <mat-chip-set aria-label="Tags">
+          <mat-chip *ngFor="let tag of snippet()!.tags" variant="outlined">
+            #{{ tag.name }}
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+    </div>
+
+    <!-- Right Column: Explanations -->
+    <div class="flex flex-col h-full min-w-0 border-l border-surface-dim">
+      <!-- Header -->
+      <div class="flex-shrink-0 px-6 py-5">
+        <h3 class="flex items-center gap-2 m-0 text-base font-semibold text-on-surface">
+          <mat-icon class="text-sm opacity-80 text-primary">lightbulb_outline</mat-icon>
+          Explanations
+        </h3>
+        <p class="m-0 mt-1 text-xs text-on-surface-variant opacity-70">
+          {{ snippet()?.explanations?.length ?? 0 }} concepts explained
+        </p>
+      </div>
+
+      <!-- List -->
+      <div class="flex-1 overflow-y-auto min-h-0">
+        <div
+          class="flex flex-col"
+          *ngIf="!snippet()?.explanations || snippet()?.explanations?.length === 0"
+        >
+          <div
+            class="flex flex-col items-center justify-center gap-3 py-10 text-on-surface-variant text-center"
+          >
+            <mat-icon class="text-4xl opacity-40">note_outlined</mat-icon>
+            <p class="text-xs m-0">No explanations available</p>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col"
+          *ngIf="snippet()?.explanations && (snippet()!.explanations?.length ?? 0) > 0"
+        >
+          <ng-container
+            *ngFor="let exp of snippet()?.explanations; let i = index; let last = last; trackBy: trackByExpId"
+          >
+            <div
+              class="px-6 py-4 border-b border-surface-dim last:border-b-0 transition-colors hover:bg-surface-bright"
+              (mouseenter)="onExplanationHover(exp)"
+              (mouseleave)="onExplanationLeave()"
+            >
+              <!-- Title -->
+              <div class="flex items-center gap-2.5 mb-2">
+                <span
+                  class="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-on-primary text-xs font-bold opacity-85 flex-shrink-0"
+                >
+                  {{ padStartIndex(i) }}
+                </span>
+                <span class="flex-1 text-sm font-medium text-on-surface break-words"
+                  >{{ exp.title }}</span
+                >
+              </div>
+
+              <!-- Description -->
+              <p class="text-xs text-on-surface-variant line-clamp-3 m-0 mt-1.5">
+                {{ exp.description }}
+              </p>
+
+              <!-- Meta -->
+              <div
+                class="flex items-center gap-1.5 mt-2 text-xs text-primary opacity-75"
+                *ngIf="exp.lineNumber || exp.startLine"
+              >
+                <mat-icon class="text-xs">code</mat-icon>
+                <span class="text-xs font-medium">
+                  Line
+                  <span *ngIf="exp.startLine && exp.endLine">
+                    {{ exp.startLine }}-{{ exp.endLine }}
+                  </span>
+                  <span *ngIf="exp.lineNumber && !exp.startLine"> {{ exp.lineNumber }} </span>
+                </span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex-shrink-0 flex gap-2 px-5 py-4 border-t border-surface-dim bg-surface">
+        <button mat-raised-button color="primary" class="flex-1 text-xs" (click)="saveSnippet()">
+          <mat-icon class="text-base mr-1">bookmark</mat-icon>
+          Save
+        </button>
+        <button mat-raised-button class="flex-1 text-xs" (click)="shareSnippet()">
+          <mat-icon class="text-base mr-1">share</mat-icon>
+          Share
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div
+      class="flex flex-col items-center justify-center gap-5 h-full p-10 text-on-surface-variant"
+    >
+      <mat-spinner></mat-spinner>
+      <p class="text-base m-0">Loading snippet...</p>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #errorState>
+  <div class="flex items-center justify-center h-full p-5 bg-surface">
+    <div
+      class="flex flex-col items-center gap-4 p-8 bg-surface-container rounded-lg border border-surface-container-highest text-center max-w-sm"
+    >
+      <mat-icon class="text-5xl text-error">error_outline</mat-icon>
+      <h2 class="m-0 text-xl font-semibold text-on-surface">{{ error() }}</h2>
+      <p class="m-0 text-sm text-on-surface-variant leading-relaxed">
+        The snippet could not be loaded. Please try again or go back.
+      </p>
+    </div>
+  </div>
+</ng-template>

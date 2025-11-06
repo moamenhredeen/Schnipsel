@@ -1,0 +1,208 @@
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* CodeMirror Styling */
+:host ::ng-deep {
+  .cm-editor {
+    height: 100%;
+    background-color: var(--mat-sys-surface);
+    font-family: 'Courier New', 'Monaco', monospace;
+  }
+
+  .cm-gutters {
+    background-color: transparent;
+    border-right: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 0;
+  }
+
+  .cm-lineNumber {
+    color: rgba(0, 0, 0, 0.35);
+    min-width: 2.8em;
+    padding: 0 8px;
+    text-align: right;
+    font-size: 12px;
+  }
+
+  .cm-content {
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 20px 0;
+  }
+
+  .cm-line {
+    padding: 0 20px;
+    margin: 0;
+  }
+
+  /* Highlight class for hovered explanation lines */
+  .cm-highlight-line {
+    background-color: rgba(233, 30, 99, 0.12) !important;
+
+    .cm-content {
+      color: var(--mat-sys-primary);
+      font-weight: 500;
+    }
+  }
+
+  .cm-highlight-line .cm-lineNumber {
+    background-color: rgba(233, 30, 99, 0.2) !important;
+    color: var(--mat-sys-primary) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Scrollbar styling */
+  .cm-scroller {
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--mat-sys-outline-variant);
+      border-radius: 4px;
+
+      &:hover {
+        background: var(--mat-sys-outline);
+      }
+    }
+  }
+
+  /* Syntax highlighting colors */
+  .cm-string {
+    color: #22863a;
+  }
+
+  .cm-number {
+    color: #005cc5;
+  }
+
+  .cm-atom {
+    color: #005cc5;
+  }
+
+  .cm-keyword {
+    color: #d73a49;
+  }
+
+  .cm-variable {
+    color: #24292e;
+  }
+
+  .cm-property {
+    color: #24292e;
+  }
+
+  .cm-comment {
+    color: #6a737d;
+  }
+
+  .cm-meta {
+    color: #6f42c1;
+  }
+
+  .cm-qualifier {
+    color: #24292e;
+  }
+
+  .cm-builtin {
+    color: #d73a49;
+  }
+
+  .cm-bracket {
+    color: #24292e;
+  }
+
+  .cm-tag {
+    color: #d73a49;
+  }
+
+  .cm-attribute {
+    color: #6f42c1;
+  }
+
+  /* Material Chip styling */
+  .mat-mdc-chip-set {
+    gap: 8px;
+  }
+
+  .mat-mdc-chip {
+    border-radius: 20px !important;
+  }
+
+  .mat-mdc-chip.mat-mdc-standard-chip.mat-mdc-chip-selected {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-sys-on-primary);
+  }
+
+  /* Material Button styling */
+  .mat-mdc-raised-button {
+    min-height: auto;
+  }
+
+  .mat-mdc-icon-button {
+    width: auto;
+    height: auto;
+    padding: 4px;
+
+    .mat-icon {
+      font-size: inherit;
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+/* Tailwind utilities for color variables */
+.bg-surface {
+  background-color: var(--mat-sys-surface);
+}
+
+.bg-surface-bright {
+  background-color: var(--mat-sys-surface-bright);
+}
+
+.bg-surface-container {
+  background-color: var(--mat-sys-surface-container);
+}
+
+.bg-surface-container-highest {
+  background-color: var(--mat-sys-surface-container-highest);
+}
+
+.bg-primary {
+  background-color: var(--mat-sys-primary);
+}
+
+.text-on-surface {
+  color: var(--mat-sys-on-surface);
+}
+
+.text-on-surface-variant {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.text-on-primary {
+  color: var(--mat-sys-on-primary);
+}
+
+.text-primary {
+  color: var(--mat-sys-primary);
+}
+
+.text-error {
+  color: var(--mat-sys-error);
+}
+
+.border-surface-dim {
+  border-color: rgba(0, 0, 0, 0.04);
+}
