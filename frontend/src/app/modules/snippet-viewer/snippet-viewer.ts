@@ -5,6 +5,8 @@ import {
   viewChild,
   ElementRef,
   HostListener,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -67,7 +69,7 @@ const highlightField = StateField.define<DecorationSet>({
   templateUrl: './snippet-viewer.html',
   styleUrl: './snippet-viewer.scss',
 })
-export class SnippetViewer {
+export class SnippetViewer implements OnInit, OnDestroy {
   codeEditorRef = viewChild<ElementRef>('codeEditor');
 
   snippet = signal<ISnippet | null>(null);
@@ -82,6 +84,7 @@ export class SnippetViewer {
   private editor: EditorView | null = null;
   private snippetService = inject(SnippetService);
   private route = inject(ActivatedRoute);
+  private keyboardListener: ((event: KeyboardEvent) => void) | null = null;
 
   constructor() {
     // Load snippet on component initialization
@@ -322,6 +325,25 @@ export class SnippetViewer {
 
     // Clear message after 2 seconds
     setTimeout(() => this.accessibilityMessage.set(''), 2000);
+  }
+
+  ngOnInit(): void {
+    // Set up document-level keyboard listener for shortcuts
+    this.keyboardListener = (event: KeyboardEvent) => {
+      this.handleKeyboardEvent(event);
+    };
+    document.addEventListener('keydown', this.keyboardListener);
+  }
+
+  ngOnDestroy(): void {
+    // Clean up keyboard listener when component is destroyed
+    if (this.keyboardListener) {
+      document.removeEventListener('keydown', this.keyboardListener);
+    }
+    // Clean up editor if it exists
+    if (this.editor) {
+      this.editor.destroy();
+    }
   }
 
   @HostListener('keydown', ['$event'])
