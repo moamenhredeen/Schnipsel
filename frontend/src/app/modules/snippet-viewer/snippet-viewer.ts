@@ -1,14 +1,11 @@
 import {
   Component,
   inject,
-  input,
-  OnInit,
   signal,
-  ViewChild,
+  viewChild,
   ElementRef,
-  AfterViewInit,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SnippetService } from '$core/services/snippet-service';
 import { ISnippet, IComment } from '$core/types/snippet';
@@ -65,12 +62,12 @@ const highlightField = StateField.define<DecorationSet>({
 
 @Component({
   selector: 'app-snippet-viewer',
-  imports: [CommonModule, MatChip, MatIcon, MatIconButton, MatProgressSpinner, MatTabsModule],
+  imports: [DatePipe, MatChip, MatIcon, MatIconButton, MatProgressSpinner, MatTabsModule],
   templateUrl: './snippet-viewer.html',
   styleUrl: './snippet-viewer.scss',
 })
-export class SnippetViewer implements OnInit, AfterViewInit {
-  @ViewChild('codeEditor') codeEditorRef!: ElementRef;
+export class SnippetViewer {
+  codeEditorRef = viewChild<ElementRef>('codeEditor');
 
   snippet = signal<ISnippet | null>(null);
   comments = signal<IComment[]>([]);
@@ -84,7 +81,8 @@ export class SnippetViewer implements OnInit, AfterViewInit {
   private snippetService = inject(SnippetService);
   private route = inject(ActivatedRoute);
 
-  ngOnInit(): void {
+  constructor() {
+    // Load snippet on component initialization
     const id = this.route.snapshot.paramMap.get('id');
 
     if (!id) {
@@ -114,10 +112,6 @@ export class SnippetViewer implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    // Editor will be initialized when snippet is loaded in ngOnInit
-  }
-
   private initializeEditor(): void {
     try {
       if (!this.snippet()) {
@@ -125,12 +119,13 @@ export class SnippetViewer implements OnInit, AfterViewInit {
         return;
       }
 
-      // Try to get the element from ViewChild ref or query DOM directly
+      // Try to get the element from viewChild signal or query DOM directly
       let editorContainer: HTMLElement | null = null;
-      if (this.codeEditorRef) {
-        editorContainer = this.codeEditorRef.nativeElement;
+      const codeEditorElement = this.codeEditorRef();
+      if (codeEditorElement) {
+        editorContainer = codeEditorElement.nativeElement;
       } else {
-        editorContainer = document.querySelector('.code-content');
+        editorContainer = document.querySelector('[#codeEditor]');
       }
 
       if (!editorContainer) {
@@ -209,20 +204,24 @@ export class SnippetViewer implements OnInit, AfterViewInit {
     this.highlightedLines.set(lines);
 
     // Add CSS class to DOM elements for highlighted lines
-    const lineNumbers = this.codeEditorRef.nativeElement.querySelectorAll('.cm-line');
-    lineNumbers.forEach((lineEl: HTMLElement, index: number) => {
-      const lineNum = index + 1;
-      if (lines.has(lineNum)) {
-        lineEl.classList.add('cm-highlight-line');
-      }
-    });
+    const codeEditorElement = this.codeEditorRef();
+    if (codeEditorElement) {
+      const lineNumbers = codeEditorElement.nativeElement.querySelectorAll('.cm-line');
+      lineNumbers.forEach((lineEl: HTMLElement, index: number) => {
+        const lineNum = index + 1;
+        if (lines.has(lineNum)) {
+          lineEl.classList.add('cm-highlight-line');
+        }
+      });
+    }
   }
 
   onExplanationLeave(): void {
-    if (!this.codeEditorRef) return;
+    const codeEditorElement = this.codeEditorRef();
+    if (!codeEditorElement) return;
 
     // Remove CSS class from all line elements
-    const lineNumbers = this.codeEditorRef.nativeElement.querySelectorAll('.cm-line');
+    const lineNumbers = codeEditorElement.nativeElement.querySelectorAll('.cm-line');
     lineNumbers.forEach((lineEl: HTMLElement) => {
       lineEl.classList.remove('cm-highlight-line');
     });
