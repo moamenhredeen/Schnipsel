@@ -479,3 +479,332 @@
 .animate-fadeInUp {
   animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* RESPONSIVE DESIGN - Mobile First Approach */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile First: Base styles for small screens (<768px) */
+@media (max-width: 767px) {
+  /* Layout: Stack editor and drawer vertically on mobile */
+  .h-full.w-full.flex {
+    flex-direction: column;
+  }
+
+  /* Make flex-1 items fill available space */
+  .flex-1 {
+    flex: 1 1 auto;
+  }
+
+  /* Drawer: Full-screen overlay on mobile */
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    border-left: none;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    overflow-y: auto;
+
+    /* Slide-in animation from right */
+    &.drawer-open {
+      transform: translateY(0);
+      animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.drawer-closed {
+      transform: translateY(100%);
+      opacity: 1;
+      width: 100%;
+      border: none;
+    }
+  }
+
+  /* Activity bar: Move to bottom on mobile */
+  .activity-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    flex-direction: row;
+    background-color: var(--mat-sys-surface-container);
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    border-left: none;
+    padding: 4px 0;
+    z-index: 999;
+    gap: 0;
+    justify-content: space-around;
+  }
+
+  /* Activity button: Larger on mobile for touch */
+  .activity-button {
+    width: 100% !important;
+    height: 56px !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    min-width: 44px;
+    flex: 1;
+
+    .mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+
+    &.active {
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        top: auto;
+        transform: none;
+        width: 100%;
+        height: 3px;
+        background-color: var(--mat-sys-primary);
+        border-radius: 0;
+      }
+    }
+  }
+
+  /* Main content: Account for bottom activity bar */
+  .flex-1.flex.overflow-hidden {
+    margin-bottom: 56px;
+  }
+
+  /* Status bar: Hide on mobile (space constraint) */
+  .h-8.px-4.bg-surface-container {
+    display: none;
+  }
+
+  /* CodeMirror: Adjust for mobile */
+  :host ::ng-deep {
+    .cm-editor {
+      height: 100%;
+      font-size: 13px;
+    }
+
+    .cm-gutters {
+      min-width: 40px;
+    }
+
+    .cm-lineNumber {
+      min-width: 40px;
+      font-size: 10px;
+      padding: 0 6px;
+    }
+
+    .cm-line {
+      padding: 0 12px;
+    }
+
+    .cm-content {
+      font-size: 12px;
+      padding: 12px 0;
+    }
+  }
+
+  /* Panel content: Optimize spacing for mobile */
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 12px !important;
+    gap: 12px !important;
+  }
+
+  /* Text sizing: Improve readability on mobile */
+  :host ::ng-deep {
+    .text-base {
+      font-size: 16px;
+    }
+
+    .text-sm {
+      font-size: 14px;
+    }
+
+    .text-xs {
+      font-size: 12px;
+    }
+  }
+
+  /* Touch targets: Minimum 44x44px */
+  button,
+  .mat-mdc-chip,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Material Chip: Larger padding on mobile */
+  :host ::ng-deep {
+    .mat-mdc-chip {
+      font-size: 11px;
+      padding: 6px 10px !important;
+    }
+  }
+
+  /* Drawer panel content: Add padding for bottom activity bar */
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+}
+
+/* Tablet: Styles for medium screens (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Drawer: Reduce width on tablet */
+  .drawer {
+    width: 320px;
+    max-width: 320px;
+    border-left: 1px solid var(--mat-sys-outline-variant);
+    border-top: none;
+
+    &.drawer-open {
+      transform: translateX(0);
+      animation: none;
+    }
+
+    &.drawer-closed {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Activity bar: Back to right side on tablet */
+  .activity-bar {
+    position: relative;
+    width: 48px;
+    height: auto;
+    flex-direction: column;
+    bottom: auto;
+    left: auto;
+    border-top: none;
+    border-left: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  /* Main content: No bottom margin on tablet */
+  .flex-1.flex.overflow-hidden {
+    margin-bottom: 0;
+  }
+
+  /* Status bar: Show on tablet */
+  .h-8.px-4.bg-surface-container {
+    display: flex;
+  }
+
+  /* CodeMirror: Slightly smaller font on tablet */
+  :host ::ng-deep {
+    .cm-content {
+      font-size: 12px;
+    }
+
+    .cm-lineNumber {
+      font-size: 10px;
+    }
+  }
+
+  /* Panel content: Adjust spacing */
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  /* Material Chip: Adjust padding */
+  :host ::ng-deep {
+    .mat-mdc-chip {
+      font-size: 11px;
+      padding: 5px 11px !important;
+    }
+  }
+}
+
+/* Desktop: Styles for large screens (>1024px) */
+@media (min-width: 1024px) {
+  /* Drawer: Full width at desktop */
+  .drawer {
+    width: 400px;
+    max-width: 400px;
+    border-left: 1px solid var(--mat-sys-outline-variant);
+    border-top: none;
+    position: relative;
+    height: auto;
+    z-index: auto;
+
+    &.drawer-open {
+      transform: translateX(0);
+      animation: none;
+    }
+
+    &.drawer-closed {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Activity bar: Right side at desktop */
+  .activity-bar {
+    position: relative;
+    width: 48px;
+    height: auto;
+    flex-direction: column;
+    border-top: none;
+    border-left: 1px solid var(--mat-sys-outline-variant);
+  }
+
+  /* Main content: No bottom margin */
+  .flex-1.flex.overflow-hidden {
+    margin-bottom: 0;
+  }
+
+  /* Status bar: Show at desktop */
+  .h-8.px-4.bg-surface-container {
+    display: flex;
+  }
+
+  /* CodeMirror: Standard desktop font sizes */
+  :host ::ng-deep {
+    .cm-content {
+      font-size: 13px;
+    }
+
+    .cm-lineNumber {
+      font-size: 11px;
+    }
+  }
+
+  /* Panel content: Standard spacing */
+  .flex-col.flex-1.overflow-y-auto {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  /* Material Chip: Standard padding */
+  :host ::ng-deep {
+    .mat-mdc-chip {
+      font-size: 12px;
+      padding: 4px 12px !important;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Additional Animations for Mobile */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
