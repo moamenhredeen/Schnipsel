@@ -1004,3 +1004,418 @@
     padding: 12px 16px !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Touch Interaction Optimization (Tasks 2.3-2.5) */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile: Enhanced touch feedback and targets */
+@media (max-width: 767px) {
+  /* Touch targets: Ensure all interactive elements are >= 44x44px */
+  button,
+  [role="button"],
+  a,
+  .mat-mdc-chip {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px 12px;
+  }
+
+  /* Activity buttons: Touch-friendly spacing */
+  .activity-button {
+    padding: 0 !important;
+    min-height: 56px !important;
+    min-width: 56px !important;
+
+    &:active {
+      background-color: var(--mat-sys-primary) / 12;
+    }
+  }
+
+  /* Material button: Larger touch targets on mobile */
+  :host ::ng-deep {
+    .mat-mdc-raised-button,
+    .mat-mdc-stroked-button,
+    .mat-mdc-icon-button {
+      min-height: 48px;
+      min-width: 48px;
+      padding: 10px 16px !important;
+    }
+  }
+
+  /* Input fields: Touch-friendly size */
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 8px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  /* Remove hover effects on touch devices, use active instead */
+  button,
+  [role="button"],
+  .mat-mdc-chip {
+    &:active {
+      opacity: 0.8;
+      background-color: var(--mat-sys-surface-bright);
+    }
+
+    &:hover {
+      /* Reduce hover effects on mobile (can be confused with touch) */
+      background-color: inherit;
+    }
+  }
+
+  /* Link styling for mobile */
+  a {
+    padding: 8px 4px;
+    min-height: 44px;
+    display: inline-block;
+  }
+
+  /* Tap highlight color (iOS) */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+  }
+
+  /* Better text selection on mobile */
+  input,
+  textarea,
+  button,
+  a,
+  [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Drawer: Swipe-friendly area at bottom */
+  .drawer {
+    touch-action: pan-y;
+  }
+
+  /* Prevent double-tap zoom on buttons */
+  button,
+  [role="button"],
+  a {
+    touch-action: manipulation;
+  }
+}
+
+/* Tablet: Balanced touch targets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  button,
+  [role="button"],
+  a,
+  .mat-mdc-chip {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 6px 10px;
+  }
+
+  :host ::ng-deep {
+    .mat-mdc-raised-button,
+    .mat-mdc-stroked-button,
+    .mat-mdc-icon-button {
+      min-height: 40px;
+      min-width: 40px;
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 40px;
+    padding: 10px 8px;
+    font-size: 15px;
+  }
+}
+
+/* Desktop: Standard touch targets (40x40px for desktop, 44x44px for touch) */
+@media (min-width: 1024px) {
+  button,
+  [role="button"],
+  a,
+  .mat-mdc-chip {
+    min-height: 36px;
+    min-width: 36px;
+  }
+
+  :host ::ng-deep {
+    .mat-mdc-raised-button,
+    .mat-mdc-stroked-button {
+      min-height: auto;
+      min-width: auto;
+    }
+  }
+
+  /* Restore hover effects on desktop */
+  button,
+  [role="button"],
+  a {
+    &:hover {
+      opacity: 0.9;
+      background-color: var(--mat-sys-surface-bright);
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 32px;
+    font-size: 14px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Responsive Text Sizing (Task 2.4) */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile: Optimized text sizing for readability */
+@media (max-width: 767px) {
+  /* Base text sizing */
+  body,
+  html {
+    font-size: 14px; /* Base size for mobile */
+  }
+
+  /* Headings: Scaled for mobile */
+  h1 {
+    font-size: 20px;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 17px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 15px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  /* Body text: Better readability */
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  /* Utility text sizes */
+  .text-base {
+    font-size: 14px;
+  }
+
+  .text-sm {
+    font-size: 13px;
+  }
+
+  .text-xs {
+    font-size: 11px;
+  }
+
+  /* Code and monospace: Mobile optimized */
+  code,
+  pre,
+  .code-text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Links and buttons: Readable size */
+  a,
+  button,
+  [role="button"] {
+    font-size: 14px;
+  }
+
+  /* Label and small text: Still readable */
+  label,
+  .label-text {
+    font-size: 12px;
+  }
+
+  /* Caption text: Not too small */
+  .caption,
+  .small-text {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}
+
+/* Tablet: Balanced text sizing */
+@media (min-width: 768px) and (max-width: 1023px) {
+  body,
+  html {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .text-base {
+    font-size: 15px;
+  }
+
+  .text-sm {
+    font-size: 13px;
+  }
+
+  .text-xs {
+    font-size: 12px;
+  }
+
+  code,
+  pre {
+    font-size: 12px;
+  }
+}
+
+/* Desktop: Standard text sizing */
+@media (min-width: 1024px) {
+  body,
+  html {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  h3 {
+    font-size: 17px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .text-base {
+    font-size: 15px;
+  }
+
+  .text-sm {
+    font-size: 13px;
+  }
+
+  .text-xs {
+    font-size: 12px;
+  }
+
+  code,
+  pre {
+    font-size: 13px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* Drawer Mobile Behavior Enhancement (Task 2.5) */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  /* Mobile drawer: Full-screen overlay with smooth animation */
+  .drawer {
+    /* Transform animation */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Hardware acceleration for smooth animation */
+    will-change: transform;
+    transform-origin: bottom center;
+
+    &.drawer-open {
+      /* Slide up from bottom */
+      transform: translateY(0);
+      opacity: 1;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Drawer content visible */
+      visibility: visible;
+    }
+
+    &.drawer-closed {
+      /* Hidden below screen */
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Drawer not interactable when hidden */
+      pointer-events: none;
+      visibility: hidden;
+    }
+  }
+
+  /* Drawer content: Scrollable and accessible */
+  .drawer.drawer-open {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  /* Panel content: Touch-friendly scrolling */
+  .flex-col.flex-1.overflow-y-auto {
+    -webkit-overflow-scrolling: touch; /* Inertia scrolling on iOS */
+    scroll-behavior: smooth;
+  }
+
+  /* Close button area for drawer (swipe down gesture support) */
+  .drawer::before {
+    content: '';
+    display: block;
+    height: 12px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.05) 50%,
+      transparent 100%
+    );
+    margin-bottom: 4px;
+    touch-action: none;
+  }
+
+  /* Prevent scroll bounce on drawer */
+  .drawer {
+    overscroll-behavior: contain;
+  }
+
+  /* Activity bar: Fixed and accessible on mobile */
+  .activity-bar {
+    z-index: 999;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--mat-sys-outline-variant);
+  }
+}
