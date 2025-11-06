@@ -581,30 +581,153 @@
     display: none;
   }
 
-  /* CodeMirror: Adjust for mobile */
+  /* CodeMirror: Adjust for mobile - Task 2.6 Code Readability */
   :host ::ng-deep {
     .cm-editor {
       height: 100%;
-      font-size: 13px;
+      font-size: 12px;
+      overflow: hidden;
     }
 
+    /* Code Readability: Enable horizontal scroll */
+    .cm-scroller {
+      overflow-x: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    /* Prevent word wrapping on mobile - allow horizontal scroll */
+    .cm-content {
+      white-space: pre;
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 12px 0;
+      letter-spacing: 0;
+    }
+
+    /* Gutters: Compact line numbers on mobile */
     .cm-gutters {
-      min-width: 40px;
+      min-width: 36px;
+      max-width: 36px;
+      background-color: var(--mat-sys-surface-bright);
+      border-right: 1px solid var(--mat-sys-outline-variant);
+      opacity: 0.9;
     }
 
     .cm-lineNumber {
-      min-width: 40px;
-      font-size: 10px;
-      padding: 0 6px;
+      min-width: 36px;
+      max-width: 36px;
+      font-size: 9px;
+      padding: 0 4px;
+      text-align: right;
+      color: var(--mat-sys-on-surface-variant);
+      opacity: 0.5;
+      font-family: 'Fira Code', 'JetBrains Mono', monospace;
+      font-weight: 400;
     }
 
+    /* Line content: Optimize padding and spacing */
     .cm-line {
       padding: 0 12px;
+      margin: 0;
+      min-height: 18px;
+      display: flex;
+      align-items: center;
     }
 
-    .cm-content {
-      font-size: 12px;
-      padding: 12px 0;
+    /* Improve visibility of syntax highlighting on small screens */
+    .cm-string {
+      color: #059669;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .cm-keyword {
+      color: #7c3aed;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .cm-comment {
+      color: var(--mat-sys-on-surface-variant);
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    .cm-number,
+    .cm-atom {
+      color: #0891b2;
+      font-weight: 500;
+    }
+
+    .cm-variable {
+      color: var(--mat-sys-on-surface);
+      opacity: 0.9;
+    }
+
+    /* Highlight line: Better visibility on mobile */
+    .cm-highlight-line {
+      background: linear-gradient(90deg, rgba(233, 30, 99, 0.08) 0%, rgba(233, 30, 99, 0.03) 100%);
+      border-left: 3px solid var(--mat-sys-primary);
+      padding-left: calc(12px - 3px);
+
+      .cm-content {
+        color: var(--mat-sys-primary);
+        font-weight: 500;
+      }
+    }
+
+    .cm-highlight-line .cm-lineNumber {
+      background-color: rgba(233, 30, 99, 0.1);
+      color: var(--mat-sys-primary) !important;
+      font-weight: 600 !important;
+      opacity: 1;
+    }
+
+    /* Highlight region: Better visibility for comment highlights */
+    .cm-highlight-region {
+      background-color: rgba(233, 30, 99, 0.15);
+      border-radius: 2px;
+      padding: 1px 3px;
+      color: var(--mat-sys-primary);
+      font-weight: 500;
+      border-bottom: 2px solid var(--mat-sys-primary);
+    }
+
+    /* Scrollbar: Larger on mobile for better touch control */
+    .cm-scroller {
+      &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--mat-sys-outline-variant);
+        border-radius: 4px;
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 0.6;
+          background: var(--mat-sys-outline);
+        }
+      }
+    }
+
+    /* Cursor: Make visible on mobile */
+    .cm-cursor {
+      border-left-width: 2px;
+      border-left-color: var(--mat-sys-primary);
+    }
+
+    /* Selection: Better visibility */
+    .cm-selectionBackground {
+      background-color: var(--mat-sys-primary) / 20;
     }
   }
 
@@ -693,14 +816,53 @@
     display: flex;
   }
 
-  /* CodeMirror: Slightly smaller font on tablet */
+  /* CodeMirror: Optimize for tablet - Task 2.6 */
   :host ::ng-deep {
-    .cm-content {
+    .cm-editor {
       font-size: 12px;
     }
 
+    .cm-scroller {
+      overflow-x: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .cm-content {
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre;
+      padding: 12px 0;
+    }
+
+    .cm-gutters {
+      min-width: 40px;
+      max-width: 40px;
+    }
+
     .cm-lineNumber {
+      min-width: 40px;
+      max-width: 40px;
       font-size: 10px;
+      padding: 0 6px;
+    }
+
+    .cm-scroller {
+      &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--mat-sys-outline-variant);
+        border-radius: 4px;
+        opacity: 0.4;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
     }
   }
 
@@ -761,14 +923,64 @@
     display: flex;
   }
 
-  /* CodeMirror: Standard desktop font sizes */
+  /* CodeMirror: Optimize for desktop - Task 2.6 */
   :host ::ng-deep {
-    .cm-content {
+    .cm-editor {
       font-size: 13px;
     }
 
+    .cm-scroller {
+      overflow-x: auto;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .cm-content {
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre;
+      padding: 16px 0;
+    }
+
+    .cm-gutters {
+      min-width: 48px;
+      max-width: 48px;
+    }
+
     .cm-lineNumber {
+      min-width: 48px;
+      max-width: 48px;
       font-size: 11px;
+      padding: 0 8px;
+    }
+
+    .cm-line {
+      padding: 0 16px;
+      min-height: 20px;
+    }
+
+    /* Enhanced readability on desktop */
+    .cm-scroller {
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--mat-sys-outline-variant);
+        border-radius: 4px;
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 0.6;
+          background: var(--mat-sys-outline);
+        }
+      }
     }
   }
 
