@@ -11,7 +11,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SnippetService } from '$core/services/snippet-service';
-import { ISnippet } from '$core/types/snippet';
+import { ISnippet, IComment } from '$core/types/snippet';
 import { MatChip } from '@angular/material/chips';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -23,8 +23,12 @@ import {
   lineNumbers,
   highlightActiveLineGutter,
   highlightSpecialChars,
+  Decoration,
+  DecorationSet,
+  ViewPlugin,
+  ViewUpdate,
 } from '@codemirror/view';
-import { EditorState } from '@codemirror/state';
+import { EditorState, StateField, StateEffect, Extension } from '@codemirror/state';
 import { highlightSelectionMatches } from '@codemirror/search';
 import { defaultHighlightStyle, syntaxHighlighting } from '@codemirror/language';
 import { javascript } from '@codemirror/lang-javascript';
@@ -34,11 +38,31 @@ import { css } from '@codemirror/lang-css';
 import { java } from '@codemirror/lang-java';
 import { cpp } from '@codemirror/lang-cpp';
 
-export interface IComment {
-  author: string;
-  text: string;
-  createdAt: Date;
-}
+// CodeMirror decoration system for highlighting comment regions
+const highlightMark = Decoration.mark({ class: 'cm-highlight-region' });
+
+const addHighlight = StateEffect.define<{ from: number; to: number }>();
+const clearHighlight = StateEffect.define();
+
+const highlightField = StateField.define<DecorationSet>({
+  create() {
+    return Decoration.none;
+  },
+  update(highlights, tr) {
+    highlights = highlights.map(tr.changes);
+    for (const effect of tr.effects) {
+      if (effect.is(addHighlight)) {
+        highlights = highlights.update({
+          add: [highlightMark.range(effect.value.from, effect.value.to)],
+        });
+      } else if (effect.is(clearHighlight)) {
+        highlights = Decoration.none;
+      }
+    }
+    return highlights;
+  },
+  provide: (f) => EditorView.decorations.from(f),
+});
 
 @Component({
   selector: 'app-snippet-viewer',
@@ -82,7 +106,7 @@ export class SnippetViewer implements OnInit, AfterViewInit {
         if (res) {
           this.snippet.set(res);
           this.codeLines.set(res.content.split('\n'));
-          this.loadComments();
+          this.comments.set(res.comments || []);
           // Initialize editor after snippet is loaded and DOM is ready
           setTimeout(() => {
             this.initializeEditor();
@@ -143,6 +167,7 @@ export class SnippetViewer implements OnInit, AfterViewInit {
           highlightActiveLineGutter(),
           highlightSpecialChars(),
           highlightSelectionMatches(),
+          highlightField,
         ],
       });
 
@@ -214,26 +239,48 @@ export class SnippetViewer implements OnInit, AfterViewInit {
     this.highlightedLines.set(new Set());
   }
 
-  isLineHighlighted(lineNumber: number): boolean {
-    return this.highlightedLines().has(lineNumber);
+  onCommentHover(comment: IComment): void {
+    if (!this.editor || !comment.codeRegion) return;
+
+    const { startLine, startChar, endLine, endChar } = comment.codeRegion;
+
+    // Convert line/char positions to CodeMirror document positions
+    const doc = this.editor.state.doc;
+
+    // Calculate document position for start
+    const startLineObj = doc.line(startLine);
+    const fromPos = startChar !== undefined ? startLineObj.from + startChar : startLineObj.from;
+
+    // Calculate document position for end
+    const endLineObj = doc.line(endLine);
+    const toPos = endChar !== undefined ? endLineObj.from + endChar : endLineObj.to;
+
+    // Apply highlight decoration using CodeMirror's state management
+    this.editor.dispatch({
+      effects: addHighlight.of({ from: fromPos, to: toPos }),
+    });
+
+    // Track highlighted lines for other UI purposes
+    const highlightedLines = new Set<number>();
+    for (let i = startLine; i <= endLine; i++) {
+      highlightedLines.add(i);
+    }
+    this.highlightedLines.set(highlightedLines);
   }
 
-  private loadComments(): void {
-    // TODO: Implement actual comment loading from service
-    // For now, using mock data
-    this.comments.set([
-      // Uncomment when you have real comment data
-      // {
-      //   author: 'John Doe',
-      //   text: 'Great snippet! Very helpful.',
-      //   createdAt: new Date(),
-      // },
-      // {
-      //   author: 'Jane Smith',
-      //   text: 'Could you explain the third function?',
-      //   createdAt: new Date(Date.now() - 3600000),
-      // },
-    ]);
+  onCommentLeave(): void {
+    if (!this.editor) return;
+
+    // Clear highlight decorations using CodeMirror's state management
+    this.editor.dispatch({
+      effects: clearHighlight.of(null),
+    });
+
+    this.highlightedLines.set(new Set());
+  }
+
+  isLineHighlighted(lineNumber: number): boolean {
+    return this.highlightedLines().has(lineNumber);
   }
 
   copyCode(): void {

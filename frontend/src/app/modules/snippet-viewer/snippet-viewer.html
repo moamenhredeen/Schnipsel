@@ -213,7 +213,9 @@
         <div class="flex-1 overflow-y-auto" *ngIf="comments().length > 0">
           <ng-container *ngFor="let comment of comments()">
             <div
-              class="px-5 py-4 border-b border-surface-dim/50 last:border-b-0 transition-all duration-300 hover:bg-surface/50"
+              class="px-5 py-4 border-b border-surface-dim/50 last:border-b-0 transition-all duration-300 hover:bg-surface/50 cursor-pointer group"
+              (mouseenter)="onCommentHover(comment)"
+              (mouseleave)="onCommentLeave()"
             >
               <div class="flex items-start gap-3 mb-2">
                 <div
@@ -230,9 +232,20 @@
                       >{{ comment.createdAt | date: 'short' }}</span
                     >
                   </div>
-                  <p class="text-sm text-on-surface-variant m-0 leading-relaxed">
+                  <p class="text-sm text-on-surface-variant m-0 leading-relaxed mb-2">
                     {{ comment.text }}
                   </p>
+
+                  <!-- Code Region Info -->
+                  <div
+                    class="flex items-center gap-1.5 text-xs text-primary/80 font-medium"
+                    *ngIf="comment.codeRegion"
+                  >
+                    <mat-icon class="text-xs">code</mat-icon>
+                    <span>
+                      Lines {{ comment.codeRegion.startLine }}-{{ comment.codeRegion.endLine }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

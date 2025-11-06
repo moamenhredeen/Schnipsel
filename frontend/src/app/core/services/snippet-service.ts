@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, from, Observable, tap } from 'rxjs';
-import {ISnippet} from '$core/types/snippet';
+import { ISnippet } from '$core/types/snippet';
 
-const dummySnippets =   [
-      {
-        id: 1,
-        title: `Filter and Map Array`,
-        description: `Advanced array manipulation with filter and map methods to transform data`,
-        content: `// Array of user objects
+const dummySnippets = [
+  {
+    id: 1,
+    title: `Filter and Map Array`,
+    description: `Advanced array manipulation with filter and map methods to transform data`,
+    content: `// Array of user objects
 const users = [
   { id: 1, name: 'Alice', age: 25, active: true },
   { id: 2, name: 'Bob', age: 30, active: false },
@@ -31,90 +31,144 @@ const avgAge = users
 
 console.log(avgAge);
 // Output: 29.33`,
-        language: 'javascript',
-        tags: [
-          {id: 1, name: 'arrays'},
-          {id: 2, name: 'functional-programming'},
-          {id: 3, name: 'javascript'}
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
+    language: 'javascript',
+    tags: [
+      { id: 1, name: 'arrays' },
+      { id: 2, name: 'functional-programming' },
+      { id: 3, name: 'javascript' },
+    ],
+    author: {
+      id: 1,
+      name: 'moamen',
+      email: 'email@example.com',
+      image_url: '/images/avatar.png',
+    },
+    comments: [
+      {
+        id: 'comment-1',
+        author: 'Sarah Johnson',
+        text: 'Great example! This really helped me understand how to chain array methods effectively.',
+        createdAt: new Date('2024-01-15T10:30:00'),
+        codeRegion: {
+          startLine: 10,
+          startChar: 2,
+          endLine: 10,
+          endChar: 27,
         },
-        explanations: [
-          {
-            id: 'exp-1',
-            title: 'Variable Declaration',
-            description: 'The "const" keyword declares a constant variable that cannot be reassigned. The users variable holds an array of objects, each representing a user with properties: id, name, age, and active status.',
-            startLine: 1,
-            endLine: 6,
-          },
-          {
-            id: 'exp-2',
-            title: 'Filter Method',
-            description: 'The filter() method creates a new array with elements that pass a test. In this case, we filter for users where the "active" property is true. The arrow function (=>) is a concise way to write functions in JavaScript.',
-            startLine: 9,
-            endLine: 11,
-          },
-          {
-            id: 'exp-3',
-            title: 'Map Method',
-            description: 'The map() method transforms each element in the array. Here we extract the name property from each filtered user and convert it to uppercase using toUpperCase(). This creates a new array of strings.',
-            startLine: 11,
-            endLine: 12,
-          },
-          {
-            id: 'exp-4',
-            title: 'Method Chaining',
-            description: 'Multiple array methods are chained together (filter → map). Each method returns a new array, allowing the next method to operate on it. This is a powerful functional programming pattern in JavaScript.',
-            startLine: 9,
-            endLine: 12,
-          },
-          {
-            id: 'exp-5',
-            title: 'Reduce for Aggregation',
-            description: 'The reduce() method accumulates values into a single result. Here it sums all ages of active users. The first parameter (sum) accumulates the total, and user.age is added to it for each element. The 0 is the initial value.',
-            startLine: 17,
-            endLine: 19,
-          },
-          {
-            id: 'exp-6',
-            title: 'Calculate Average',
-            description: 'The total age sum (from reduce) is divided by the count of active users to get the average age. We filter again to get the count, which demonstrates the reusability of the filter condition.',
-            startLine: 20,
-            endLine: 20,
-          }
-        ]
       },
       {
-        id: 2,
-        title: `Printing`,
-        description: `This is how easy to print something in python`,
-        language: 'python',
-        content: `
+        id: 'comment-2',
+        author: 'Mike Chen',
+        text: 'Could you explain why we need to filter twice when calculating the average? Is there a more efficient way?',
+        createdAt: new Date('2024-01-15T14:22:00'),
+        codeRegion: {
+          startLine: 18,
+          startChar: 2,
+          endLine: 19,
+          endChar: 63,
+        },
+      },
+      {
+        id: 'comment-3',
+        author: 'Emily Rodriguez',
+        text: "Nice! I would add that map() and filter() don't mutate the original array, which is important for functional programming.",
+        createdAt: new Date('2024-01-16T09:15:00'),
+        codeRegion: {
+          startLine: 11,
+          startChar: 6,
+          endLine: 11,
+          endChar: 49,
+        },
+      },
+      {
+        id: 'comment-4',
+        author: 'David Kim',
+        text: 'Thanks for sharing! This is much cleaner than using traditional for loops.',
+        createdAt: new Date('2024-01-16T16:45:00'),
+        codeRegion: {
+          startLine: 2,
+          startChar: 0,
+          endLine: 5,
+          endChar: 48,
+        },
+      },
+    ],
+    explanations: [
+      {
+        id: 'exp-1',
+        title: 'Variable Declaration',
+        description:
+          'The "const" keyword declares a constant variable that cannot be reassigned. The users variable holds an array of objects, each representing a user with properties: id, name, age, and active status.',
+        startLine: 1,
+        endLine: 6,
+      },
+      {
+        id: 'exp-2',
+        title: 'Filter Method',
+        description:
+          'The filter() method creates a new array with elements that pass a test. In this case, we filter for users where the "active" property is true. The arrow function (=>) is a concise way to write functions in JavaScript.',
+        startLine: 9,
+        endLine: 11,
+      },
+      {
+        id: 'exp-3',
+        title: 'Map Method',
+        description:
+          'The map() method transforms each element in the array. Here we extract the name property from each filtered user and convert it to uppercase using toUpperCase(). This creates a new array of strings.',
+        startLine: 11,
+        endLine: 12,
+      },
+      {
+        id: 'exp-4',
+        title: 'Method Chaining',
+        description:
+          'Multiple array methods are chained together (filter → map). Each method returns a new array, allowing the next method to operate on it. This is a powerful functional programming pattern in JavaScript.',
+        startLine: 9,
+        endLine: 12,
+      },
+      {
+        id: 'exp-5',
+        title: 'Reduce for Aggregation',
+        description:
+          'The reduce() method accumulates values into a single result. Here it sums all ages of active users. The first parameter (sum) accumulates the total, and user.age is added to it for each element. The 0 is the initial value.',
+        startLine: 17,
+        endLine: 19,
+      },
+      {
+        id: 'exp-6',
+        title: 'Calculate Average',
+        description:
+          'The total age sum (from reduce) is divided by the count of active users to get the average age. We filter again to get the count, which demonstrates the reusability of the filter condition.',
+        startLine: 20,
+        endLine: 20,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: `Printing`,
+    description: `This is how easy to print something in python`,
+    language: 'python',
+    content: `
           #! /usr/bin/python
 
           # this is how easy to print something in python
           print('hello world')
           `,
-        tags: [
-          {id: 1, name: 'problem-solving'}
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
-        },
-      },
-      {
-        id: 3,
-        title: `Printing`,
-        description: `This is how easy to print something in python`,
-        language: 'html',
-        content: `
+    tags: [{ id: 1, name: 'problem-solving' }],
+    author: {
+      id: 1,
+      name: 'moamen',
+      email: 'email@example.com',
+      image_url: '/images/avatar.png',
+    },
+  },
+  {
+    id: 3,
+    title: `Printing`,
+    description: `This is how easy to print something in python`,
+    language: 'html',
+    content: `
 <mat-card class="p-3" appearance="outlined">
   <mat-card-header>
     <img matCardAvatar [src]="value().author.image_url" alt="author image">
@@ -148,44 +202,42 @@ console.log(avgAge);
     </button>
   </mat-card-actions>
 </mat-card>`,
-        tags: [
-          {id: 2, name: 'angular'},
-          {id: 3, name: 'web'},
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
-        },
-      },
-      {
-        id: 4,
-        title: `Printing`,
-        description: `This is how easy to print something in python`,
-        language: 'python',
-        content: `
+    tags: [
+      { id: 2, name: 'angular' },
+      { id: 3, name: 'web' },
+    ],
+    author: {
+      id: 1,
+      name: 'moamen',
+      email: 'email@example.com',
+      image_url: '/images/avatar.png',
+    },
+  },
+  {
+    id: 4,
+    title: `Printing`,
+    description: `This is how easy to print something in python`,
+    language: 'python',
+    content: `
           #! /usr/bin/python
 
           # this is how easy to print something in python
           print('hello world')
           `,
-        tags: [
-          {id: 1, name: 'problem-solving'}
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
-        },
-      },
-      {
-        id: 5,
-        title: `Printing`,
-        description: `This is how easy to print something in python`,
-        language: 'javascript',
-        content: `
+    tags: [{ id: 1, name: 'problem-solving' }],
+    author: {
+      id: 1,
+      name: 'moamen',
+      email: 'email@example.com',
+      image_url: '/images/avatar.png',
+    },
+  },
+  {
+    id: 5,
+    title: `Printing`,
+    description: `This is how easy to print something in python`,
+    language: 'javascript',
+    content: `
           // this is how easy to print something in python
           console.log('hello world')
 
@@ -195,17 +247,15 @@ console.log(avgAge);
           // this is how easy to print something in python
           console.log('hello world')
           `,
-        tags: [
-          {id: 1, name: 'problem-solving'}
-        ],
-        author: {
-          id: 1,
-          name: 'moamen',
-          email: 'email@example.com',
-          image_url: '/images/avatar.png',
-        },
-      }
-    ]
+    tags: [{ id: 1, name: 'problem-solving' }],
+    author: {
+      id: 1,
+      name: 'moamen',
+      email: 'email@example.com',
+      image_url: '/images/avatar.png',
+    },
+  },
+];
 
 @Injectable({
   providedIn: 'root',
@@ -220,13 +270,12 @@ export class SnippetService {
   getSnippets(): Observable<ISnippet[]> {
     return from([dummySnippets]).pipe(
       delay(1000),
-      tap((res) => this.snippetsSubject.next(res)));
+      tap((res) => this.snippetsSubject.next(res)),
+    );
   }
 
   getSnippetById(id: number): Observable<ISnippet> {
-    const s: ISnippet = dummySnippets.filter(el => el.id === id)[0]
-    return from([
-      s
-    ]).pipe(delay(1000));
+    const s: ISnippet = dummySnippets.filter((el) => el.id === id)[0];
+    return from([s]).pipe(delay(1000));
   }
 }

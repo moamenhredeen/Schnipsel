@@ -1,5 +1,5 @@
-import {IUser} from './user';
-import {ITag} from '$core/types/tag';
+import { IUser } from './user';
+import { ITag } from '$core/types/tag';
 
 export type ICodeExplanation = {
   id: string;
@@ -10,14 +10,27 @@ export type ICodeExplanation = {
   endLine?: number;
 };
 
+export type IComment = {
+  id: string;
+  author: string;
+  text: string;
+  createdAt: Date;
+  codeRegion?: {
+    startLine: number;
+    startChar?: number;
+    endLine: number;
+    endChar?: number;
+  };
+};
+
 export type ISnippet = {
   id: number;
-  title: string,
-  description: string,
+  title: string;
+  description: string;
   author: IUser;
   tags: ITag[];
   content: string;
   language: string;
   explanations?: ICodeExplanation[];
+  comments?: IComment[];
 };
-

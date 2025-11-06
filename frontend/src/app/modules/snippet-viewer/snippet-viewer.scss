@@ -66,6 +66,16 @@
     opacity: 1;
   }
 
+  /* Character-level highlight for comments */
+  .cm-highlight-region {
+    background-color: rgba(233, 30, 99, 0.15);
+    border-radius: 3px;
+    padding: 2px 4px;
+    color: var(--mat-sys-primary);
+    font-weight: 500;
+    border-bottom: 2px solid var(--mat-sys-primary);
+  }
+
   /* Scrollbar styling */
   .cm-scroller {
     &::-webkit-scrollbar {
