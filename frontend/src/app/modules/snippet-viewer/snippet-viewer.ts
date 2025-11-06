@@ -4,6 +4,7 @@ import {
   signal,
   viewChild,
   ElementRef,
+  HostListener,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -76,6 +77,7 @@ export class SnippetViewer {
   codeLines = signal<string[]>([]);
   isDrawerOpen = signal<boolean>(true);
   activePanel = signal<'info' | 'explanations' | 'comments'>('info');
+  accessibilityMessage = signal<string>('');
 
   private editor: EditorView | null = null;
   private snippetService = inject(SnippetService);
@@ -288,6 +290,9 @@ export class SnippetViewer {
 
   toggleDrawer(): void {
     this.isDrawerOpen.set(!this.isDrawerOpen());
+    const state = this.isDrawerOpen() ? 'opened' : 'closed';
+    this.accessibilityMessage.set(`Sidebar ${state}`);
+    setTimeout(() => this.accessibilityMessage.set(''), 1500);
   }
 
   setActivePanel(panel: 'info' | 'explanations' | 'comments'): void {
@@ -296,6 +301,59 @@ export class SnippetViewer {
     } else {
       this.activePanel.set(panel);
       this.isDrawerOpen.set(true);
+    }
+
+    // Announce to screen readers
+    const panelNames = {
+      'info': 'Information',
+      'explanations': 'Explanations',
+      'comments': 'Comments'
+    };
+    const panelName = panelNames[panel];
+    const count = panel === 'explanations'
+      ? this.snippet()?.explanations?.length ?? 0
+      : panel === 'comments'
+      ? this.comments().length
+      : 0;
+
+    this.accessibilityMessage.set(
+      `${panelName} panel opened${count > 0 ? ` with ${count} items` : ''}`
+    );
+
+    // Clear message after 2 seconds
+    setTimeout(() => this.accessibilityMessage.set(''), 2000);
+  }
+
+  @HostListener('keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    // Map of keyboard shortcuts
+    const panelShortcuts: Record<string, 'info' | 'explanations' | 'comments'> = {
+      'F1': 'info',
+      'F2': 'explanations',
+      'F3': 'comments',
+    };
+
+    // Handle panel switching
+    if (event.key in panelShortcuts) {
+      event.preventDefault();
+      this.setActivePanel(panelShortcuts[event.key]);
+      return;
+    }
+
+    // Handle Escape to close drawer
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.isDrawerOpen.set(false);
+      this.accessibilityMessage.set('Sidebar closed');
+      setTimeout(() => this.accessibilityMessage.set(''), 1500);
+      return;
+    }
+
+    // Handle Ctrl+B to toggle drawer
+    if (event.ctrlKey && event.key.toLowerCase() === 'b') {
+      event.preventDefault();
+      this.toggleDrawer();
+      return;
     }
   }
 

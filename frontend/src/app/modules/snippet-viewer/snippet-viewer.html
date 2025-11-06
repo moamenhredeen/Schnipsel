@@ -1,4 +1,9 @@
 <div class="h-full w-full flex flex-col bg-surface overflow-hidden">
+  <!-- Screen reader announcements -->
+  <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+    {{ accessibilityMessage() }}
+  </div>
+
   @if (error()) {
     <div class="flex items-center justify-center h-full">
       <div class="flex flex-col items-center gap-4 p-8 text-center max-w-sm">
@@ -19,6 +24,10 @@
           class="drawer flex h-full bg-surface overflow-hidden border-l border-outline-variant/10 transition-all duration-200 ease-in-out"
           [class.drawer-open]="isDrawerOpen()"
           [class.drawer-closed]="!isDrawerOpen()"
+          role="tabpanel"
+          [attr.aria-hidden]="!isDrawerOpen()"
+          [attr.id]="activePanel() + '-panel'"
+          [attr.aria-labelledby]="activePanel() + '-tab'"
         >
           @if (activePanel() === 'info') {
             <div class="flex-1 flex flex-col h-full overflow-hidden">
@@ -248,12 +257,18 @@
           }
         </div>
 
-        <div class="activity-bar flex flex-col bg-surface border-l border-outline-variant/10">
+        <div class="activity-bar flex flex-col bg-surface border-l border-outline-variant/10" role="tablist" aria-label="Sidebar panels">
           <button
             mat-icon-button
             (click)="setActivePanel('info')"
             [class.active]="activePanel() === 'info' && isDrawerOpen()"
             class="activity-button"
+            role="tab"
+            [attr.aria-selected]="activePanel() === 'info' && isDrawerOpen()"
+            aria-controls="info-panel"
+            aria-label="Snippet information"
+            matTooltip="Snippet Information (F1)"
+            matTooltipPosition="left"
           >
             <mat-icon>info</mat-icon>
           </button>
@@ -262,6 +277,12 @@
             (click)="setActivePanel('explanations')"
             [class.active]="activePanel() === 'explanations' && isDrawerOpen()"
             class="activity-button"
+            role="tab"
+            [attr.aria-selected]="activePanel() === 'explanations' && isDrawerOpen()"
+            aria-controls="explanations-panel"
+            aria-label="Code explanations"
+            matTooltip="Explanations (F2)"
+            matTooltipPosition="left"
           >
             <mat-icon>lightbulb</mat-icon>
           </button>
@@ -270,6 +291,12 @@
             (click)="setActivePanel('comments')"
             [class.active]="activePanel() === 'comments' && isDrawerOpen()"
             class="activity-button"
+            role="tab"
+            [attr.aria-selected]="activePanel() === 'comments' && isDrawerOpen()"
+            aria-controls="comments-panel"
+            aria-label="User comments"
+            matTooltip="Comments (F3)"
+            matTooltipPosition="left"
           >
             <mat-icon>comment</mat-icon>
           </button>
