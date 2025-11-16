@@ -1,3 +1,0 @@
-<jboss-web xmlns="http://www.jboss.com/xml/ns/javaee" version="7.0">
-    <context-root>/kakera</context-root>
-</jboss-web>
