@@ -1,0 +1,39 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Snippet</title>
+</head>
+<body>
+<main>
+
+    <article class="pico-background-red-50" th:if="${error}">
+        <header class="pico-background-red-200">Error</header>
+        <span th:text="${error}"></span>
+    </article>
+
+        <h1>Create a new User</h1>
+        <form class="max-w-200" action="#" th:action="@{/admin/users/create}" th:object="${user}" method="post">
+            <label class="flex flex-col gap-1 mt-6">
+                Username
+                <input class="p-2" type="text" placeholder="enter username ..."  th:field="*{username}" required autofocus>
+            </label>
+
+            <label class="flex flex-col gap-1 mt-6">
+                Email
+                <input class="p-2" placeholder="bob@example.com" type="email" th:field="*{email}" required>
+            </label>
+
+            <label class="flex flex-col gap-1 mt-6">
+                Password
+                <input class="p-2" placeholder="your strong password" type="password" th:field="*{password}" required>
+            </label>
+
+            <label class="flex gap-2 mt-6">
+                <input type="checkbox" th:field="*{enabled}">
+                Enabled
+            </label>
+            <button class="mt-6 w-24 p-2 bg-zinc-800 text-white border-none cursor-pointer" type="submit">Save</button>
+        </form>
+</main>
+</body>
+</html>

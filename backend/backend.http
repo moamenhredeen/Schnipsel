@@ -1,0 +1,48 @@
+@url = http://localhost:8080
+
+### Get Snippets
+GET {{url}}/snippets
+
+### Get Snippet by id
+GET {{url}}/snippets/1
+
+### Create Snippet
+POST {{url}}/snippets
+Content-Type: application/json
+
+{
+  "title": "{{$random.lorem.word}}",
+  "description": "{{$random.lorem.sentence}}",
+  "content": "{{$random.lorem.paragraph}}",
+  "language": "{{$random.code.ean8}}"
+}
+
+### Update Snippet
+PUT {{url}}/snippets/1
+Content-Type: application/json
+
+{
+  "title": "{{$random.lorem.word}}",
+  "description": "{{$random.lorem.sentence}}",
+  "content": "{{$random.lorem.paragraph}}",
+  "language": "{{$random.code.ean8}}"
+}
+
+### Delete Snippet By Id
+DELETE {{url}}/snippets/{{$randomInt}}
+
+
+### Get Snippet Comments
+GET {{url}}/snippets/2/comments
+
+### Comment a snippet
+POST {{url}}/snippets/2/comments
+Content-Type: application/json
+
+{
+  "content": "{{$random.lorem.paragraph}}"
+}
+
+### Robot
+GET {{url}}/console
+x-robot-password: beep-beep

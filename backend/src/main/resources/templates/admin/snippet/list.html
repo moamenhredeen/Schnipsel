@@ -1,0 +1,31 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Snippet</title>
+</head>
+<body>
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Language</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="snippet: ${snippets}">
+            <td>
+                <a th:href="@{/admin/snippets/{id}(id=${snippet.id})}" th:text="${snippet.title}"></a>
+            </td>
+            <td th:text="${snippet.description}"></td>
+            <td th:text="${snippet.language}"></td>
+            <td>
+                <a th:href="@{/admin/snippets/{id}/delete(id=${snippet.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

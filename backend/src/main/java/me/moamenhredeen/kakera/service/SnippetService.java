@@ -1,0 +1,61 @@
+package me.moamenhredeen.kakera.service;
+
+import me.moamenhredeen.kakera.model.Comment;
+import me.moamenhredeen.kakera.model.Snippet;
+import me.moamenhredeen.kakera.repository.CommentRepository;
+import me.moamenhredeen.kakera.repository.SnippetRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Optional;
+
+@Service
+public class SnippetService {
+
+    private final SnippetRepository snippetRepository;
+    private final CommentRepository commentRepository;
+
+    public SnippetService(SnippetRepository snippetRepository, CommentRepository commentRepository) {
+        this.snippetRepository = snippetRepository;
+        this.commentRepository = commentRepository;
+    }
+
+    public Page<Snippet> getAllSnippets() {
+        return snippetRepository.findAll(Pageable.ofSize(10));
+    }
+
+    public Optional<Snippet> getSnippetById(Long id) {
+        return snippetRepository.findById(id);
+    }
+
+    public Snippet createSnippet(Snippet snippet) {
+        return snippetRepository.save(snippet);
+    }
+
+    public Snippet updateSnippet(Snippet snippet) {
+        if (snippet.getId() == null) {
+            throw new IllegalArgumentException("Snippet id must not be null");
+        }
+        return snippetRepository.save(snippet);
+    }
+
+    public void deleteSnippet(Long id) {
+        snippetRepository.deleteById(id);
+    }
+
+    public Page<Comment> getSnippetComments(Long id) {
+        return commentRepository.findBySnippetId(id, Pageable.ofSize(10));
+    }
+
+    public Comment commentSnippet(Long id, String content) {
+        var comment = new Comment();
+        comment.setContent(content);
+        var snippet = new Snippet();
+        snippet.setId(id);
+        comment.setSnippet(snippet);
+        return this.commentRepository.save(comment);
+    }
+
+}

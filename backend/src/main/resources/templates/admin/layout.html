@@ -1,0 +1,29 @@
+<!doctype html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/uno.css">
+    <title th:replace="${title}">Document</title>
+</head>
+<body class="m-0 p-0 h-full flex min-h-screen relative">
+
+<nav class="fixed left-0 top-0 bottom-0 w-60 bg-zinc-100">
+    <h1 class="px-4">
+        <a class="decoration-none text-black" href="/admin">Kakera</a>
+    </h1>
+    <ul class="list-none p-4 flex flex-col">
+        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin">Home</a></li>
+        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin/snippets">Snippets</a></li>
+        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin/users">Users</a></li>
+        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/logout">Logout</a></li>
+    </ul>
+</nav>
+
+
+<div class="absolute left-60 min-h-screen top-0 right-0 p-4 box-border">
+    <main th:replace="${content}"></main>
+</div>
+
+</body>
+</html>

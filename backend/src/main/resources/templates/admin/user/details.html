@@ -1,0 +1,12 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Snippet</title>
+</head>
+<body>
+<main>
+    <h1 th:text="${user.username}"></h1>
+    <p th:text="${user.email}"></p>
+</main>
+</body>
+</html>

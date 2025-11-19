@@ -1,0 +1,13 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Snippet</title>
+</head>
+<body>
+<main>
+    <h1 th:text="${snippet.title}"></h1>
+    <p th:text="${snippet.description}"></p>
+    <pre th:text="${snippet.content}"></pre>
+</main>
+</body>
+</html>

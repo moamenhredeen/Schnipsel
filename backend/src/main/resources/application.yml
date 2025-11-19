@@ -1,0 +1,32 @@
+spring:
+
+  application:
+    name: kakera
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kakeradb
+    username: kakerauser
+    password: kakerapassword
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: kakera
+            client-name: kakera
+            client-secret: PB62FiIdDvCIM4hgqoSdvy7uv7p7FXQG
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakera
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8090/realms/master
+            authorization-uri: http://localhost:8090/realms/master/protocol/openid-connect/auth
+
