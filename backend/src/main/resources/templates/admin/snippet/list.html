@@ -1,31 +1,72 @@
 <!doctype html>
 <html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
 <head>
-    <title>Snippet</title>
+    <title>Snippets</title>
 </head>
 <body>
 <main>
-    <table>
+    <h1>Snippets</h1>
+    <div class="flex justify-between rounded py-4">
+        <form class="flex gap-2" action="#" th:action="@{/admin/snippets}">
+            <input class="w-full p-2" th:value="${filter.title().orElse('')}" name="title" type="text" placeholder="Search" autofocus>
+        </form>
+        <p class="flex-1"></p>
+        <a class="bg-zinc-800 text-white p-2 px-4 decoration-none" href="/admin/snippets/create">Create</a>
+    </div>
+
+    <table class="border-collapse border border-solid border-zinc-300 w-full">
         <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Language</th>
+        <tr class="text-left bg-zinc-800 text-white">
+            <th class="border border-solid border-zinc-300 p-2">Id</th>
+            <th class="border border-solid border-zinc-300 p-2">Title</th>
+            <th class="border border-solid border-zinc-300 p-2">Description</th>
+            <th class="border border-solid border-zinc-300 p-2">Language</th>
+            <th class="border border-solid border-zinc-300 p-2">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="snippet: ${snippets}">
-            <td>
-                <a th:href="@{/admin/snippets/{id}(id=${snippet.id})}" th:text="${snippet.title}"></a>
+        <tr class="hover:bg-zinc-100" th:each="snippet: ${snippets}">
+            <td class="border border-solid border-zinc-300 p-2">
+                <a th:href="@{/admin/snippets/{id}(id=${snippet.id()})}" th:text="${snippet.id()}"></a>
             </td>
-            <td th:text="${snippet.description}"></td>
-            <td th:text="${snippet.language}"></td>
-            <td>
-                <a th:href="@{/admin/snippets/{id}/delete(id=${snippet.id})}">Delete</a>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${snippet.title()}"></td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${snippet.description()}"></td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${snippet.language()}"></td>
+            <td class="border border-solid border-zinc-300 p-2 flex gap-2">
+                <form class="flex-1" action="#" th:action="@{/admin/snippets/delete/{id}(id=${snippet.id()})}" method="post">
+                    <button class="bg-red-50 text-red-800 border-none cursor-pointer p-2 w-full" type="submit">Delete</button>
+                </form>
+                <form class="flex-1" action="#" th:action="@{/admin/snippets/edit/{id}(id=${snippet.id()})}" method="get">
+                    <button class="bg-blue-50 text-blue-800 border-none cursor-pointer p-2 w-full" type="submit">Edit</button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <div class="flex justify-end">
+        <ul class="list-none p-0 flex justify-center gap-3 text-gray-900">
+            <li>
+                <a th:href="@{/admin/snippets(page=${snippets.previousOrFirstPageable().pageNumber})}"
+                   class="decoration-none grid size-8 place-content-center border-solid border-1 border-gray-200 transition-colors hover:bg-gray-50 rtl:rotate-180" aria-label="Previous page">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </li>
+
+            <li class="text-sm/8 font-medium tracking-widest" th:text="${snippets.getNumber()} + ' / ' + ${snippets.getTotalPages()}">2/12</li>
+
+            <li>
+                <a th:href="@{/admin/snippets(page=${snippets.nextOrLastPageable().pageNumber})}"
+                   class="decoration-none grid size-8 place-content-center border-1 border-solid border-gray-200 transition-colors hover:bg-gray-50 rtl:rotate-180" aria-label="Next page">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
 </main>
 </body>
 </html>

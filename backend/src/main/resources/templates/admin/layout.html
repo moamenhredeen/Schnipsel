@@ -9,22 +9,22 @@
 </head>
 <body class="m-0 p-0 h-full flex min-h-screen relative">
 
-<nav class="fixed left-0 top-0 bottom-0 w-60 bg-zinc-100">
+<nav class="fixed left-0 top-0 bottom-0 p-2 w-60 border-r-1 border-r-solid border-gray-200">
     <h1 class="px-4">
         <a class="decoration-none text-black" href="/admin">Kakera</a>
     </h1>
 
-    <ul class="list-none px-4 flex flex-col">
-        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin">Home</a></li>
-        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin/snippets">Snippets</a></li>
-        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin/roles">Roles</a></li>
-        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-black block" href="/admin/users">Users</a></li>
-        <li><a class="decoration-none hover:bg-zinc-200 p-2 rounded text-red-700 block" href="/logout">Logout</a></li>
+    <ul class="list-none p-0 space-y-1">
+        <li><a class="decoration-none block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" href="/admin">Home</a></li>
+        <li><a class="decoration-none block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" href="/admin/snippets">Snippets</a></li>
+        <li><a class="decoration-none block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" href="/admin/roles">Roles</a></li>
+        <li><a class="decoration-none block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700" href="/admin/users">Users</a></li>
+        <li><a class="decoration-none block px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-100 hover:text-red-700" href="/logout">Logout</a></li>
     </ul>
 </nav>
 
 
-<div class="absolute left-60 min-h-screen top-0 right-0 p-4 box-border">
+<div class="absolute left-64 min-h-screen top-0 right-0 p-4 box-border">
     <main th:replace="${content}"></main>
 </div>
 

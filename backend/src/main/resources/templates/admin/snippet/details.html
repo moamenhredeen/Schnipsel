@@ -5,9 +5,28 @@
 </head>
 <body>
 <main>
-    <h1 th:text="${snippet.title}"></h1>
-    <p th:text="${snippet.description}"></p>
-    <pre th:text="${snippet.content}"></pre>
+    <h1>Snippet Details</h1>
+    <div class="grid grid-cols-[auto_1fr] shadow p-4 mt-6 gap-4">
+        <h3 class="col-span-2">Personal Info</h3>
+
+        <span>Id</span>
+        <span th:text="${snippet.id()}"></span>
+
+        <span>Title</span>
+        <span th:text="${snippet.title()}"></span>
+
+        <span>Description</span>
+        <span th:text="${snippet.description()}"></span>
+
+        <span>Language</span>
+        <span th:text="${snippet.language()}"></span>
+
+    </div>
+
+    <div class="shadow p-4 mt-6">
+        <pre><code th:text="${snippet.content()}">
+        </code></pre>
+    </div>
 </main>
 </body>
 </html>

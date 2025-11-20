@@ -1,6 +1,7 @@
 package me.moamenhredeen.kakera.api.controller;
 
 
+import me.moamenhredeen.kakera.admin.dto.SnippetFilter;
 import me.moamenhredeen.kakera.api.dto.CreateCommentDto;
 import me.moamenhredeen.kakera.api.dto.CreateSnippetDto;
 import me.moamenhredeen.kakera.api.dto.GetCommentDto;
@@ -10,6 +11,7 @@ import me.moamenhredeen.kakera.service.SnippetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,10 +28,7 @@ public class SnippetController {
 
     @GetMapping
     public List<GetSnippetDto> getSnippet() {
-        return this.snippetService
-                .getAllSnippets()
-                .map(s -> new GetSnippetDto(s.getId(), s.getTitle(), s.getDescription(), s.getContent(), s.getLanguage()))
-                .toList();
+        return List.of();
     }
 
     @GetMapping("{id}/comments")
