@@ -2,7 +2,7 @@ package me.moamenhredeen.kakera.model;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -23,7 +23,26 @@ public class Role {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Role role)) return false;
+        return Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

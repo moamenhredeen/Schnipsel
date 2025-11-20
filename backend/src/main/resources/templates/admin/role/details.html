@@ -1,0 +1,12 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Role</title>
+</head>
+<body>
+<main>
+    <h1 th:text="${role.getId()}"></h1>
+    <p th:text="${role.getName()}"></p>
+</main>
+</body>
+</html>

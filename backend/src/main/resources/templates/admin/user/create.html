@@ -28,6 +28,13 @@
                 <input class="p-2" placeholder="your strong password" type="password" th:field="*{password}" required>
             </label>
 
+            <label class="flex flex-col gap-1 mt-6">
+                Roles
+                <select class="p-2" multiple="multiple" th:field="*{roles}">
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                </select>
+            </label>
+
             <label class="flex gap-2 mt-6">
                 <input type="checkbox" th:field="*{enabled}">
                 Enabled

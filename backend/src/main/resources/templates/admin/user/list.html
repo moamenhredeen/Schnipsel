@@ -7,8 +7,19 @@
 <main>
     <h1>Users</h1>
     <div class="flex justify-between rounded py-4">
-        <form class="flex-1" action="#" th:action="@{/admin/users}">
-            <input class="w-full p-2" th:value="${search}" name="search" type="text" placeholder="Search">
+        <form class="flex gap-2" action="#" th:action="@{/admin/users}">
+            <input class="w-full p-2" th:value="${filter.search().orElse('')}" name="search" type="text" placeholder="Search" autofocus>
+            <select class="border-1 border-solid border-zinc-600 bg-transparent" name="enabled">
+                <option value="">All</option>
+                <option value="true" th:selected="${filter.enabled().orElse(false)}">Enabled</option>
+                <option value="false" th:selected="${filter.enabled().orElse(false)}">Disabled</option>
+            </select>
+            <select class="border-1 border-solid border-zinc-600 bg-transparent" name="roleId">
+                <option value="">All</option>
+                <option th:each="role: ${roles}" th:value="${role.getId()}" th:selected="${role.getId().equals(filter.roleId().orElse(null))}" th:text="${role.getName()}"></option>
+            </select>
+            <button type="submit" class="bg-zinc-800 text-white cursor-pointer p-2 px-4 border-none">Search</button>
+            <a class="bg-zinc-100 text-zinc-800 cursor-pointer p-2 px-4 border-none" th:href="@{/admin/users}">Reset</a>
         </form>
         <p class="flex-1"></p>
         <a class="bg-zinc-800 text-white p-2 px-4 decoration-none" href="/admin/users/create">Create</a>
@@ -21,28 +32,37 @@
             <th class="border border-solid border-zinc-300 p-2">Username</th>
             <th class="border border-solid border-zinc-300 p-2">Email</th>
             <th class="border border-solid border-zinc-300 p-2">Enabled</th>
+            <th class="border border-solid border-zinc-300 p-2">Roles</th>
             <th class="border border-solid border-zinc-300 p-2">Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr class="hover:bg-zinc-100" th:each="user: ${users}">
             <td class="border border-solid border-zinc-300 p-2">
-                <a th:href="@{/admin/users/{id}(id=${user.id})}" th:text="${user.id}"></a>
+                <a th:href="@{/admin/users/{id}(id=${user.id()})}" th:text="${user.id()}"></a>
             </td>
-            <td class="border border-solid border-zinc-300 p-2" th:text="${user.username}"></td>
-            <td class="border border-solid border-zinc-300 p-2" th:text="${user.email}"></td>
-            <td class="border border-solid border-zinc-300 p-2" th:text="${user.enabled}"></td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${user.username()}"></td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${user.email()}"></td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${user.enabled()}"></td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${user.roles()}"></td>
             <td class="border border-solid border-zinc-300 p-2 flex gap-2">
-                <form action="#" th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post">
-                    <button class="bg-red-200 border-none cursor-pointer p-1" type="submit">Delete</button>
+                <form class="flex-1" action="#" th:action="@{/admin/users/delete/{id}(id=${user.id()})}" method="post">
+                    <button class="bg-red-50 text-red-800 border-none cursor-pointer p-2 w-full" type="submit">Delete</button>
                 </form>
-                <form action="#" th:action="@{/admin/users/edit/{id}(id=${user.id})}" method="get">
-                    <button class="bg-blue-200 border-none cursor-pointer p-1" type="submit">Edit</button>
+                <form class="flex-1" action="#" th:action="@{/admin/users/edit/{id}(id=${user.id()})}" method="get">
+                    <button class="bg-blue-50 text-blue-800 border-none cursor-pointer p-2 w-full" type="submit">Edit</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <div class="flex justify-end items-center gap-2 mt-4">
+        <a class="decoration-none bg-zinc-800 p-1 px-4 text-white" th:href="@{/admin/users(page=${users.previousOrFirstPageable().pageNumber})}"><</a>
+        <span th:text="${users.getSize()}"></span> /
+        <span th:text="${users.getTotalElements()}"></span>
+        <a class="decoration-none bg-zinc-800 p-1 px-4 text-white" th:href="@{/admin/users(page=${users.nextOrLastPageable().pageNumber})}">></a>
+    </div>
 </main>
 </body>
 </html>

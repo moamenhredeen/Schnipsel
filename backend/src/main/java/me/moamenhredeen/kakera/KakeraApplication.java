@@ -33,7 +33,6 @@ public class KakeraApplication {
         return http
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers("/admin/home").permitAll();
-                    authorize.requestMatchers("/admin").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .authenticationProvider(new NoPasswordAuthenticationProvider().user("moamen"))

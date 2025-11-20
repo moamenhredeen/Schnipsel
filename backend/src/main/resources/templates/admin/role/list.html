@@ -1,0 +1,41 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Roles</title>
+</head>
+<body>
+<main>
+    <h1>Roles</h1>
+    <div class="flex justify-between rounded py-4">
+        <form class="flex-1" action="#" th:action="@{/admin/roles}">
+            <input class="w-full p-2" th:value="${search}" name="search" type="text" placeholder="Search" autofocus>
+        </form>
+        <p class="flex-1"></p>
+        <a class="bg-zinc-800 text-white p-2 px-4 decoration-none" href="/admin/roles/create">Create</a>
+    </div>
+
+    <table class="border-collapse border border-solid border-zinc-300 w-full">
+        <thead>
+        <tr class="text-left bg-zinc-800 text-white">
+            <th class="border border-solid border-zinc-300 p-2">Id</th>
+            <th class="border border-solid border-zinc-300 p-2">Name</th>
+            <th class="border border-solid border-zinc-300 p-2">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="hover:bg-zinc-100" th:each="role: ${roles}">
+            <td class="border border-solid border-zinc-300 p-2">
+                <a th:href="@{/admin/roles/{id}(id=${role.id})}" th:text="${role.id}"></a>
+            </td>
+            <td class="border border-solid border-zinc-300 p-2" th:text="${role.name}"></td>
+            <td class="border border-solid border-zinc-300 p-2 flex gap-2">
+                <form action="#" th:action="@{/admin/roles/delete/{id}(id=${role.id})}" method="post">
+                    <button class="bg-red-200 border-none cursor-pointer p-1" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html th:replace="~{admin/layout :: layout(~{::title}, ~{::main})}" lang="en">
+<head>
+    <title>Snippet</title>
+</head>
+<body>
+<main>
+
+    <article class="pico-background-red-50" th:if="${error}">
+        <header class="pico-background-red-200">Error</header>
+        <span th:text="${error}"></span>
+    </article>
+
+        <h1>Create a new Role</h1>
+        <form class="max-w-200" action="#" th:action="@{/admin/roles/create}" th:object="${role}" method="post">
+            <label class="flex flex-col gap-1 mt-6">
+                Role Name
+                <input class="p-2" type="text" placeholder="enter role name ..."  th:field="*{name}" required autofocus>
+            </label>
+            <button class="mt-6 w-24 p-2 bg-zinc-800 text-white border-none cursor-pointer" type="submit">Save</button>
+        </form>
+</main>
+</body>
+</html>

@@ -1,8 +1,11 @@
 package me.moamenhredeen.kakera.admin.controller;
 
+import me.moamenhredeen.kakera.admin.dto.GetUserDto;
+import me.moamenhredeen.kakera.admin.dto.UserFilter;
 import me.moamenhredeen.kakera.model.User;
+import me.moamenhredeen.kakera.service.RoleService;
 import me.moamenhredeen.kakera.service.UserService;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,21 +15,19 @@ import org.springframework.web.bind.annotation.*;
 public class AdminUserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public AdminUserController(UserService userService) {
+    public AdminUserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping
-    public String users(Model model, @RequestParam(required = false) String search) {
-        Page<User> users;
-        if (search != null) {
-            users = this.userService.search(search);
-        } else {
-            users = this.userService.getAllUsers();
-        }
-        model.addAttribute("search", search);
+    public String users(Model model, @ModelAttribute UserFilter filter, Pageable pageable) {
+        var users = this.userService.getAll(filter, pageable).map(GetUserDto::from);
+        model.addAttribute("filter", filter);
         model.addAttribute("users", users);
+        model.addAttribute("roles", roleService.getAllRoles(""));
         return "admin/user/list";
     }
 
@@ -44,6 +45,7 @@ public class AdminUserController {
     @GetMapping("create")
     public String createUserForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAllRoles(""));
         return "admin/user/create";
     }
 
@@ -64,6 +66,7 @@ public class AdminUserController {
         try {
             var user = this.userService.getById(id);
             model.addAttribute("user", user.orElseThrow());
+            model.addAttribute("roles", roleService.getAllRoles(""));
             return "/admin/user/edit";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
