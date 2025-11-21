@@ -4,9 +4,9 @@
     <title>User Details</title>
 </head>
 <body>
-<main class="max-w-5xl mx-auto">
+<main class="max-w-3xl p-8">
     <h1 class="text-2xl font-semibold tracking-tight">User Details</h1>
-    <div class="grid grid-cols-[auto_1fr] shadow p-6 mt-6 gap-4 bg-white rounded-xl border border-gray-200">
+    <div class="grid grid-cols-[auto_1fr] mt-6 gap-4">
         <h3 class="col-span-2 text-sm font-semibold text-gray-700">Personal Info</h3>
 
         <span class="text-xs uppercase tracking-wider text-gray-500">Id</span>
@@ -27,14 +27,15 @@
     </div>
 
     <div class="mt-8">
-        <h3 class="text-lg font-medium text-gray-900 mb-4">Roles</h3>
-        <div class="space-y-3" th:if="${user.getRoles() != null and !#lists.isEmpty(user.getRoles())}">
-            <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow duration-200" 
-                 th:each="role : ${user.getRoles()}">
-                <p class="text-gray-700 text-sm font-medium leading-relaxed" th:text="${role.getName()}"></p>
-            </div>
-        </div>
-        <div class="bg-gray-50 rounded-lg border border-dashed border-gray-300 p-8 text-center" 
+        <h3 class="text-sm font-semibold text-gray-700">Roles</h3>
+
+        <ul class="flex">
+            <li>
+                <a class="px-2 underline" th:href="@{/admin/roles/{id}(id=${role.id})}" th:text="${role.getName()}" th:each="role : ${user.getRoles()}"></a>
+            </li>
+        </ul>
+
+        <div class="bg-gray-50 rounded-lg border border-dashed border-gray-300 p-8 text-center"
              th:unless="${user.getRoles() != null and !#lists.isEmpty(user.getRoles())}">
             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />

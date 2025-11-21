@@ -1,3 +1,5 @@
+@import "tailwindcss" source("../templates");
+
 @font-face {
     font-family: 'Lexend';
     src: url('Lexend-Thin.woff2') format('woff2');
@@ -70,8 +72,15 @@
     font-display: swap;
 }
 
+@theme {
+    --color-primary: var(--color-lime-500);
+    --color-outline: var(--color-zinc-200);
+    --color-fg: var(--color-zinc-800);
+}
+
 
 body {
     font-family: 'Lexend', sans-serif;
     font-weight: 300;
+    color: var(--color-fg);
 }

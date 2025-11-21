@@ -1,5 +1,0 @@
-@import "tailwindcss" source("../templates");
-
-@theme {
-    --color-primary: #000000;
-}
