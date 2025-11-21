@@ -2,6 +2,7 @@ package me.moamenhredeen.kakera.model;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -31,6 +32,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @Embedded
+    private AuditMetadata auditMetadata;
 
     public Long getId() {
         return id;
@@ -82,5 +86,16 @@ public class User {
 
     public boolean getEnabled() {
         return enabled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

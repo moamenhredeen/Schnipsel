@@ -19,6 +19,9 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
+    @Embedded
+    private AuditMetadata auditMetadata;
+
     public Long getId() {
         return id;
     }
@@ -45,4 +48,5 @@ public class Role {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

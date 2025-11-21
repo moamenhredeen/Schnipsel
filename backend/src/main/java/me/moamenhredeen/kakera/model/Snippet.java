@@ -3,6 +3,7 @@ package me.moamenhredeen.kakera.model;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "snippets")
@@ -26,6 +27,12 @@ public class Snippet {
 
     @OneToMany(mappedBy = "snippet")
     private Collection<Comment> comments;
+
+    @ManyToOne
+    private Profile profile;
+
+    @Embedded
+    private AuditMetadata auditMetadata;
 
     public Snippet() {}
 
@@ -87,5 +94,16 @@ public class Snippet {
 
     public void setComments(Collection<Comment> comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Snippet snippet)) return false;
+        return Objects.equals(id, snippet.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
