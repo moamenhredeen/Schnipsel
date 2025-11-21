@@ -4,28 +4,48 @@
     <title>Snippet</title>
 </head>
 <body>
-<main>
-    <h1>Snippet Details</h1>
-    <div class="grid grid-cols-[auto_1fr] shadow p-4 mt-6 gap-4">
-        <h3 class="col-span-2">Personal Info</h3>
+<main class="max-w-5xl mx-auto">
+    <h1 class="text-2xl font-semibold tracking-tight">Snippet Details</h1>
+    <div class="grid grid-cols-[auto_1fr] shadow p-6 mt-6 gap-4 bg-white rounded-xl border border-gray-200">
+        <h3 class="col-span-2 text-sm font-semibold text-gray-700">Personal Info</h3>
 
-        <span>Id</span>
-        <span th:text="${snippet.id()}"></span>
+        <span class="text-xs uppercase tracking-wider text-gray-500">Id</span>
+        <span class="text-gray-900" th:text="${snippet.id()}"></span>
 
-        <span>Title</span>
-        <span th:text="${snippet.title()}"></span>
+        <span class="text-xs uppercase tracking-wider text-gray-500">Title</span>
+        <span class="text-gray-900 font-medium" th:text="${snippet.title()}"></span>
 
-        <span>Description</span>
-        <span th:text="${snippet.description()}"></span>
+        <span class="text-xs uppercase tracking-wider text-gray-500">Description</span>
+        <span class="text-gray-700" th:text="${snippet.description()}"></span>
 
-        <span>Language</span>
-        <span th:text="${snippet.language()}"></span>
+        <span class="text-xs uppercase tracking-wider text-gray-500">Language</span>
+        <span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700" th:text="${snippet.language()}"></span>
+        </span>
 
     </div>
 
-    <div class="shadow p-4 mt-6">
-        <pre><code th:text="${snippet.content()}">
+    <div class="shadow p-0 mt-6 rounded-xl overflow-hidden border border-gray-200 bg-gray-950">
+        <div class="px-4 py-2 border-b border-gray-800 bg-gray-900 text-gray-200 text-xs uppercase tracking-wider">Code</div>
+        <pre class="p-4 overflow-auto"><code class="font-mono text-sm leading-6" th:text="${snippet.content()}">
         </code></pre>
+    </div>
+
+    <div class="mt-8">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Comments</h3>
+        <div class="space-y-3" th:if="${snippet.comment() != null and !#lists.isEmpty(snippet.comment())}">
+            <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-sm transition-shadow duration-200" 
+                 th:each="comment : ${snippet.comment()}">
+                <p class="text-gray-700 text-sm leading-relaxed" th:text="${comment.content()}"></p>
+            </div>
+        </div>
+        <div class="bg-gray-50 rounded-lg border border-dashed border-gray-300 p-8 text-center" 
+             th:unless="${snippet.comment() != null and !#lists.isEmpty(snippet.comment())}">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <p class="mt-3 text-sm text-gray-500">No comments yet</p>
+        </div>
     </div>
 </main>
 </body>

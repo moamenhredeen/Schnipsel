@@ -3,7 +3,6 @@ package me.moamenhredeen.kakera.service;
 import me.moamenhredeen.kakera.admin.dto.SnippetFilter;
 import me.moamenhredeen.kakera.model.Comment;
 import me.moamenhredeen.kakera.model.Snippet;
-import me.moamenhredeen.kakera.model.User;
 import me.moamenhredeen.kakera.repository.CommentRepository;
 import me.moamenhredeen.kakera.repository.SnippetRepository;
 import me.moamenhredeen.kakera.specification.SnippetSpecification;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -35,7 +33,7 @@ public class SnippetService {
     }
 
     public Optional<Snippet> getSnippetById(Long id) {
-        return snippetRepository.findById(id);
+        return snippetRepository.findByIdWithComments(id);
     }
 
     public Snippet createSnippet(Snippet snippet) {

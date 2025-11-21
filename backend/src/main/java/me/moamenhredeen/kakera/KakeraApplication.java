@@ -38,7 +38,7 @@ public class KakeraApplication {
                 .authenticationProvider(new NoPasswordAuthenticationProvider().user("moamen"))
                 .with(robotLoginConfigurer)
                 .formLogin(t -> t.defaultSuccessUrl("/admin", true))
-                .oauth2Login(oauth -> oauth.defaultSuccessUrl("/admin", true))
+                //.oauth2Login(oauth -> oauth.defaultSuccessUrl("/admin", true))
                 .build();
     }
 

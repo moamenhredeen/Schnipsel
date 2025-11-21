@@ -1,5 +1,6 @@
 package me.moamenhredeen.kakera.admin.controller;
 
+import me.moamenhredeen.kakera.admin.dto.GetCommentDto;
 import me.moamenhredeen.kakera.admin.dto.GetSnippetDetailsDto;
 import me.moamenhredeen.kakera.admin.dto.GetSnippetDto;
 import me.moamenhredeen.kakera.admin.dto.SnippetFilter;
@@ -41,7 +42,18 @@ public class AdminSnippetController {
             return "admin/not-found";
         }
         model.addAttribute("snippet", snippet.map(s ->
-                new GetSnippetDetailsDto(s.getId(), s.getTitle(), s.getDescription(), s.getLanguage(), s.getContent())).get());
+                new GetSnippetDetailsDto(
+                        s.getId(),
+                        s.getTitle(),
+                        s.getDescription(),
+                        s.getLanguage(),
+                        s.getContent(),
+                        s.getComments().stream().map(c ->
+                                new GetCommentDto(
+                                        c.getId(),
+                                        c.getContent()
+                                )).toList()
+                )).get());
         return "admin/snippet/details";
     }
 
