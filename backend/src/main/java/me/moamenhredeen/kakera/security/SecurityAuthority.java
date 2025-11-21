@@ -8,6 +8,6 @@ public record SecurityAuthority(Role role) implements GrantedAuthority {
 
     @Override
     public @Nullable String getAuthority() {
-        return this.role.getName();
+        return "ROLE_%s".formatted(this.role.getName());
     }
 }

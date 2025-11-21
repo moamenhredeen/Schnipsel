@@ -1,7 +1,5 @@
 package me.moamenhredeen.kakera;
 
-import me.moamenhredeen.kakera.security.NoPasswordAuthenticationProvider;
-import me.moamenhredeen.kakera.security.RobotLoginConfigurer;
 import me.moamenhredeen.kakera.security.UserDetailsServiceImpl;
 import me.moamenhredeen.kakera.service.UserService;
 import org.springframework.boot.SpringApplication;
@@ -27,18 +25,15 @@ public class KakeraApplication {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
-
-        var robotLoginConfigurer = new RobotLoginConfigurer().password("beep-beep");
-
         return http
-                .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/admin/home").permitAll();
-                    authorize.anyRequest().authenticated();
+                .authorizeHttpRequests(authZ -> {
+                    authZ
+                            .requestMatchers("/*.css", "/*.woff2").permitAll()
+                            .requestMatchers("/admin/users*", "/admin/roles*").hasRole("superadmin")
+                            .requestMatchers("/admin*").hasRole("admin")
+                            .anyRequest().authenticated();
                 })
-                .authenticationProvider(new NoPasswordAuthenticationProvider().user("moamen"))
-                .with(robotLoginConfigurer)
                 .formLogin(t -> t.defaultSuccessUrl("/admin", true))
-                //.oauth2Login(oauth -> oauth.defaultSuccessUrl("/admin", true))
                 .build();
     }
 

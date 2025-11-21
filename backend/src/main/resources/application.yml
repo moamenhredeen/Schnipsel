@@ -16,10 +16,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
+logging:
+  level:
+    org.springframework.security: trace
+
 #  security:
 #    oauth2:
 #      client:
