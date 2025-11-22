@@ -2,6 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+    <developers>
+        <developer>
+            <name>Moamen Hredeen</name>
+            <email>moamen@hredeen.com</email>
+            <url>https://moamenhredeen.me</url>
+            <organization>Nextmission</organization>
+            <organizationUrl>https://nextmission.io</organizationUrl>
+        </developer>
+    </developers>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -11,8 +22,8 @@
 	<groupId>me.moamenhredeen</groupId>
 	<artifactId>kakera</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backend</name>
-	<description>backend</description>
+	<name>Kakera</name>
+	<description>Code snippet sharing platform</description>
 
 	<properties>
 		<java.version>25</java.version>
@@ -87,7 +98,15 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>25</source>
+                    <target>25</target>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>
