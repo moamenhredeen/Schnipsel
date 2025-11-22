@@ -1,5 +1,7 @@
 # Kakera - Application Domain Description
 
+maybe rename the project to Schnipsel
+
 ## What is Kakera?
 
 Kakera is a web-based platform where developers can share code snippets with descriptions and context. Think of it as a library where programmers can save, organize, and discover useful pieces of code that solve specific problems or demonstrate particular techniques.
