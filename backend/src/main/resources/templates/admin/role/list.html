@@ -5,52 +5,54 @@
 </head>
 <body>
 <main class="max-w-7xl mx-auto">
-    <h1 class="text-2xl font-semibold tracking-tight">Roles</h1>
-    <div class="flex justify-between items-center mt-6 gap-4">
-        <form class="flex gap-3 flex-1" action="#" th:action="@{/admin/roles}">
-            <input class="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm" 
-                   th:value="${search}" 
-                   name="search" 
-                   type="text" 
-                   placeholder="Search roles..." 
-                   autofocus>
-            <button type="submit" class="px-5 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium">Search</button>
-            <a class="px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium decoration-none inline-flex items-center" th:href="@{/admin/roles}">Reset</a>
-        </form>
-        <a class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-medium decoration-none inline-flex items-center" href="/admin/roles/create">
+    <div class="flex justify-between items-center mt-4">
+        <hgroup>
+            <h1 class="text-2xl font-semibold tracking-tight">Roles</h1>
+            <p class="text-gray-500">Manage Roles</p>
+        </hgroup>
+        <a class="px-5 py-2 bg-zinc-800 text-zinc-50 transition-colors text-sm font-medium decoration-none inline-flex items-center" href="/admin/roles/create">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
-            Create Role
+            Create User
         </a>
     </div>
 
-    <div class="mt-6 bg-white rounded-xl border border-gray-200 shadow overflow-hidden">
-        <table class="w-full">
-            <thead class="bg-gray-50 border-b border-gray-200">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Id</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
-                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-            <tr class="hover:bg-gray-50 transition-colors" th:each="role: ${roles}">
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <a class="text-indigo-600 hover:text-indigo-800 font-medium text-sm" 
-                       th:href="@{/admin/roles/{id}(id=${role.id})}" 
-                       th:text="${role.id}"></a>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${role.name}"></td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <form action="#" th:action="@{/admin/roles/delete/{id}(id=${role.id})}" method="post">
-                        <button class="border-none px-3 py-1.5 bg-red-50 text-red-700 rounded-md hover:bg-red-100 transition-colors text-xs font-medium" type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <form class="flex gap-3 mt-8" th:action="@{/admin/roles}">
+        <input class="flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-zinc-300 focus:border-transparent text-sm"
+               th:value="${search}"
+               name="search"
+               type="text"
+               placeholder="Search roles..."
+               autofocus>
+        <button type="submit" class="cursor-pointer px-5 py-2 bg-gray-900 text-white hover:bg-gray-800 transition-colors text-sm font-medium">Search</button>
+        <a class="px-5 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-sm font-medium decoration-none inline-flex items-center" th:href="@{/admin/roles}">Reset</a>
+    </form>
+
+    <table class="w-full mt-6 bg-white border border-gray-200">
+        <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Id</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+        <tr class="hover:bg-gray-50 transition-colors" th:each="role: ${roles}">
+            <td class="px-6 py-4 whitespace-nowrap">
+                <a class="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+                   th:href="@{/admin/roles/{id}(id=${role.id})}"
+                   th:text="${role.id}"></a>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${role.name}"></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <form  th:action="@{/admin/roles/delete/{id}(id=${role.id})}" method="post">
+                    <button class="cursor-pointer px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 transition-colors text-xs font-medium" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 </body>
 </html>
