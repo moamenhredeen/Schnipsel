@@ -26,14 +26,14 @@ public class KakeraApplication {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http
-                .authorizeHttpRequests(authZ -> {
-                    authZ
-                            .requestMatchers("/*.css", "/*.woff2").permitAll()
+                .authorizeHttpRequests(authZ -> authZ
+                            .requestMatchers("/*.css", "/*.woff2", "/login*", "/error*", "/logout*").permitAll()
                             .requestMatchers("/admin/users*", "/admin/roles*").hasRole("superadmin")
                             .requestMatchers("/admin*").hasRole("admin")
-                            .anyRequest().authenticated();
-                })
-                .formLogin(t -> t.defaultSuccessUrl("/admin", true))
+                            .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin", true))
                 .build();
     }
 

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/tailwind.min.css">
+    <link rel="stylesheet" href="/index.css">
+    <title>Kakera - Logout</title>
+</head>
+<body>
+<main class="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+
+    <div class="w-md">
+        <p class="text-center text-gray-500 text-lg">Are you sure you want to logout ?</p>
+
+        <form method="post" th:action="@{/logout}">
+            <button class="w-full mt-4 px-6 py-2 bg-zinc-800 text-white hover:bg-zinc-700 transition-colors text-sm font-medium cursor-pointer"
+                    type="submit" >
+                Logout
+            </button>
+        </form>
+
+    </div>
+</main>
+</body>
+</html>
