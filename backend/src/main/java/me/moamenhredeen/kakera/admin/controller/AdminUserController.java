@@ -6,6 +6,7 @@ import me.moamenhredeen.kakera.model.User;
 import me.moamenhredeen.kakera.service.RoleService;
 import me.moamenhredeen.kakera.service.UserService;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,16 @@ public class AdminUserController {
     @GetMapping
     public String users(Model model, @ModelAttribute UserFilter filter, Pageable pageable) {
         var users = this.userService.getAll(filter, pageable).map(GetUserDto::from);
+        var usernameSort = switch (pageable.getSort().getOrderFor("username")) {
+            case Sort.Order order when order.getDirection().isAscending() -> "username,desc";
+            case Sort.Order order when order.getDirection().isDescending() -> "";
+            case null -> "username,asc";
+            default -> throw new IllegalStateException("Unexpected value: " + pageable.getSort().getOrderFor("username"));
+        };
         model.addAttribute("filter", filter);
         model.addAttribute("users", users);
         model.addAttribute("roles", roleService.getAllRoles(""));
+        model.addAttribute("usernameSort", usernameSort);
         return "admin/user/list";
     }
 
