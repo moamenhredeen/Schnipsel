@@ -1,17 +1,17 @@
-# Kakera - Application Domain Description
+# Schnipsel - Application Domain Description
 
 maybe rename the project to Schnipsel
 
-## What is Kakera?
+## What is Schnipsel?
 
-Kakera is a web-based platform where developers can share code snippets with descriptions and context. Think of it as a library where programmers can save, organize, and discover useful pieces of code that solve specific problems or demonstrate particular techniques.
+Schnipsel is a web-based platform where developers can share code snippets with descriptions and context. Think of it as a library where programmers can save, organize, and discover useful pieces of code that solve specific problems or demonstrate particular techniques.
 
 ---
 
 ## Core Concepts
 
 ### 1. User
-A person who uses the Kakera platform. Users can be developers, students, or anyone who works with code.
+A person who uses the Schnipsel platform. Users can be developers, students, or anyone who works with code.
 
 **What a User has:**
 - A unique username
@@ -194,7 +194,7 @@ A saved history of changes made to a snippet over time. Every time a snippet is 
 ## Main User Journeys
 
 ### Journey 1: New User Signs Up
-1. User visits the Kakera website
+1. User visits the Schnipsel website
 2. User clicks "Sign Up"
 3. User enters username, email, and password
 4. System validates the information (checks if username/email are unique)
@@ -328,7 +328,7 @@ A saved history of changes made to a snippet over time. Every time a snippet is 
 
 ## Vocabulary Summary
 
-**User** = A person with an account on Kakera
+**User** = A person with an account on Schnipsel
 
 **Snippet** = A saved piece of code with description
 
@@ -366,4 +366,4 @@ A saved history of changes made to a snippet over time. Every time a snippet is 
 
 ---
 
-This domain description covers the essential concepts, relationships, and rules that make up the Kakera application. The application is fundamentally about helping developers save, organize, share, and discover useful code snippets in a collaborative community environment, with full version control to track how code evolves over time.
+This domain description covers the essential concepts, relationships, and rules that make up the Schnipsel application. The application is fundamentally about helping developers save, organize, share, and discover useful code snippets in a collaborative community environment, with full version control to track how code evolves over time.
