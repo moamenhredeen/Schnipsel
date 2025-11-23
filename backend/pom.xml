@@ -20,9 +20,9 @@
 	</parent>
 
 	<groupId>me.moamenhredeen</groupId>
-	<artifactId>kakera</artifactId>
+	<artifactId>schnipsel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Kakera</name>
+	<name>Schnipsel</name>
 	<description>Code snippet sharing platform</description>
 
 	<properties>

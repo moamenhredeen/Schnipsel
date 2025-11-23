@@ -2,7 +2,7 @@ spring:
   config:
     import: classpath:/application.dev.yml
   application:
-    name: kakera
+    name: schnipsel
   data:
     web:
       pageable:
@@ -24,12 +24,12 @@ logging:
 #      client:
 #        registration:
 #          keycloak:
-#            client-id: kakera
-#            client-name: kakera
+#            client-id: schnipsel
+#            client-name: schnipsel
 #            client-secret: PB62FiIdDvCIM4hgqoSdvy7uv7p7FXQG
 #            authorization-grant-type: authorization_code
 #            scope: openid,profile,email
-#            redirect-uri: http://localhost:8080/login/oauth2/code/kakera
+#            redirect-uri: http://localhost:8080/login/oauth2/code/schnipsel
 #        provider:
 #          keycloak:
 #            issuer-uri: http://localhost:8090/realms/master

@@ -2,9 +2,9 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - 'POSTGRES_DB=kakeradb'
-      - 'POSTGRES_PASSWORD=kakerapassword'
-      - 'POSTGRES_USER=kakerauser'
+      - 'POSTGRES_DB=schnipseldb'
+      - 'POSTGRES_PASSWORD=schnipselpassword'
+      - 'POSTGRES_USER=schnipseluser'
     ports:
       - '5432:5432'
   keycloak:
