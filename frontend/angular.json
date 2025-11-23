@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kakera": {
+    "schnipsel": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -59,10 +59,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "kakera:build:production"
+              "buildTarget": "schnipsel:build:production"
             },
             "development": {
-              "buildTarget": "kakera:build:development"
+              "buildTarget": "schnipsel:build:development"
             }
           },
           "defaultConfiguration": "development"

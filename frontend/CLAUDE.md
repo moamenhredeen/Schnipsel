@@ -1,9 +1,9 @@
-# Kakera Frontend - Comprehensive Codebase Overview
+# Schnipsel Frontend - Comprehensive Codebase Overview
 
 ## 1. Project Structure and Key Directories
 
 ```
-kakera/frontend/
+schnipsel/frontend/
 ├── src/
 │   ├── app/
 │   │   ├── core/                    # Core application logic
@@ -536,7 +536,7 @@ npm test                   # Run tests in watch mode
 ### Production Deployment
 ```bash
 npm run build              # Build optimized production bundle
-# Output in dist/kakera/
+# Output in dist/schnipsel/
 ```
 
 ### Debugging
@@ -598,7 +598,7 @@ Based on TODO comments in code:
 
 ## Summary
 
-The Kakera Frontend is a modern Angular 20 application built with:
+The Schnipsel Frontend is a modern Angular 20 application built with:
 - **Clean Architecture**: Modular feature-based organization
 - **Modern Patterns**: Standalone components, signals, lazy loading
 - **Strong Typing**: TypeScript strict mode throughout
