@@ -6,12 +6,12 @@
 
 <body>
 <main class="max-w-7xl mx-auto px-8">
+    <!-- heading -->
     <div class="flex justify-between items-center mt-4">
         <hgroup>
             <h1 class="text-2xl font-semibold tracking-tight">Users</h1>
             <p class="text-gray-500">Manage Users</p>
         </hgroup>
-
         <a th:href="@{/admin/users/create}"
            class="inline-flex justify-center items-center gap-2 whitespace-nowrap rounded-radius bg-primary border border-primary dark:border-primary-dark px-4 py-2 text-sm font-medium tracking-wide text-on-primary transition hover:opacity-75 text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-primary-dark dark:text-on-primary-dark dark:focus-visible:outline-primary-dark">
             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -23,6 +23,8 @@
             Create
         </a>
     </div>
+
+    <!-- filters -->
     <form class="flex items-end gap-3 mt-8" th:action="@{/admin/users}">
         <div class="flex w-full max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
             <label for="search" class="w-fit pl-0.5 text-sm">Search</label>
@@ -33,9 +35,6 @@
                    name="search"
                    placeholder="Search users..."/>
         </div>
-
-
-
         <div class="flex max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
             <label for="enabled" class="w-fit pl-0.5 text-sm">Enabled</label>
             <select id="enabled" name="enabled" class="w-full rounded-radius border border-outline bg-surface-alt px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark">
@@ -44,7 +43,6 @@
                 <option value="false" th:selected="${filter.enabled().orElse(false)}">Disabled</option>
             </select>
         </div>
-
         <div class="flex max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
             <label for="roleId" class="w-fit pl-0.5 text-sm">Role</label>
             <select id="roleId" name="roleId" class="w-full rounded-radius border border-outline bg-surface-alt px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark">
@@ -60,6 +58,7 @@
     </form>
 
 
+    <!-- list -->
     <div class="overflow-hidden w-full overflow-x-auto rounded-radius border border-outline dark:border-outline-dark mt-8">
         <table class="w-full text-left text-sm text-on-surface dark:text-on-surface-dark">
             <thead class="border-b border-outline bg-surface-alt text-sm text-on-surface-strong dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark-strong">
