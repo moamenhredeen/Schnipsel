@@ -4,55 +4,81 @@
     <title>Roles</title>
 </head>
 <body>
-<main class="max-w-7xl mx-auto">
+<main class="max-w-7xl mx-auto px-8">
     <div class="flex justify-between items-center mt-4">
         <hgroup>
             <h1 class="text-2xl font-semibold tracking-tight">Roles</h1>
             <p class="text-gray-500">Manage Roles</p>
         </hgroup>
-        <a class="px-5 py-2 bg-zinc-800 text-zinc-50 transition-colors text-sm font-medium decoration-none inline-flex items-center" href="/admin/roles/create">
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        <a th:href="@{/admin/roles/create}"
+           class="inline-flex justify-center items-center gap-2 whitespace-nowrap rounded-radius bg-primary border border-primary dark:border-primary-dark px-4 py-2 text-sm font-medium tracking-wide text-on-primary transition hover:opacity-75 text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-primary-dark dark:text-on-primary-dark dark:focus-visible:outline-primary-dark">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 class="size-5 fill-on-primary dark:fill-on-primary-dark" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
+                      clip-rule="evenodd"/>
             </svg>
-            Create User
+            Create
         </a>
     </div>
 
-    <form class="flex gap-3 mt-8" th:action="@{/admin/roles}">
-        <input class="flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-zinc-300 focus:border-transparent text-sm"
-               th:value="${search}"
-               name="search"
-               type="text"
-               placeholder="Search roles..."
-               autofocus>
-        <button type="submit" class="cursor-pointer px-5 py-2 bg-gray-900 text-white hover:bg-gray-800 transition-colors text-sm font-medium">Search</button>
-        <a class="px-5 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-sm font-medium decoration-none inline-flex items-center" th:href="@{/admin/roles}">Reset</a>
+    <form class="flex items-end gap-3 mt-8" th:action="@{/admin/roles}">
+        <div class="flex w-full max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
+            <label for="search" class="w-fit pl-0.5 text-sm">Search</label>
+            <input id="search"
+                   th:value="${search}"
+                   type="text"
+                   class="w-full rounded-radius border border-outline bg-surface-alt px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark"
+                   name="search"
+                   autofocus
+                   placeholder="Search roles..."/>
+        </div>
+
+        <span class="flex-1"></span>
+        <a th:href="@{/admin/roles}" class="whitespace-nowrap rounded-radius bg-surface-alt border border-surface-alt px-4 py-2 text-sm font-medium tracking-wide text-on-surface-strong transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface-alt active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-surface-dark-alt dark:border-surface-dark-alt dark:text-on-surface-dark-strong dark:focus-visible:outline-surface-dark-alt" >Reset</a>
+        <button type="submit" class="whitespace-nowrap rounded-radius bg-secondary border border-secondary px-4 py-2 text-sm font-medium tracking-wide text-on-secondary transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-secondary-dark dark:border-secondary-dark dark:text-on-secondary-dark dark:focus-visible:outline-secondary-dark">Search</button>
     </form>
 
-    <table class="w-full mt-6 bg-white border border-gray-200">
-        <thead class="bg-gray-50 border-b border-gray-200">
-        <tr>
-            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Id</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Name</th>
-            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-        <tr class="hover:bg-gray-50 transition-colors" th:each="role: ${roles}">
-            <td class="px-6 py-4 whitespace-nowrap">
-                <a class="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
-                   th:href="@{/admin/roles/{id}(id=${role.id})}"
-                   th:text="${role.id}"></a>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" th:text="${role.name}"></td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <form  th:action="@{/admin/roles/delete/{id}(id=${role.id})}" method="post">
-                    <button class="cursor-pointer px-3 py-1.5 bg-red-50 text-red-700 hover:bg-red-100 transition-colors text-xs font-medium" type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="overflow-hidden w-full overflow-x-auto rounded-radius border border-outline dark:border-outline-dark mt-8">
+        <table class="w-full text-left text-sm text-on-surface dark:text-on-surface-dark">
+            <thead class="border-b border-outline bg-surface-alt text-sm text-on-surface-strong dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark-strong">
+            <tr>
+                <th scope="col" class="p-4">Name</th>
+                <th scope="col" class="p-4">ID</th>
+                <th scope="col" class="p-4">Created At</th>
+                <th scope="col" class="p-4">Action</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-outline dark:divide-outline-dark">
+            <tr th:each="role : ${roles}">
+                <td class="p-4">
+                    <a class="text-indigo-600 hover:text-indigo-800 font-medium text-sm"
+                       th:href="@{/admin/roles/{id}(id=${role.id})}"
+                       th:text="${role.name}"></a>
+                </td>
+                <td th:text="${role.id}" class="p-4"></td>
+                <td class="p-4">Sep 17, 2018</td>
+                <td class="p-4 flex gap-2">
+                    <a class="whitespace-nowrap rounded-radius bg-transparent p-0.5 font-semibold text-primary outline-primary hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-100 active:outline-offset-0 dark:text-primary-dark dark:outline-primary-dark"
+                       th:href="@{/admin/roles/{id}(id=${role.id})}">Edit</a>
+
+                    <form
+                            th:action="@{/admin/roles/delete/{id}(id=${role.id})}"
+                            method="post"
+                            x-on:submit.prevent="$dispatch('deletedialog', {
+                                event: $event,
+                                title: 'Delete Role',
+                                message: 'Are you sure you want to delete the role ?'
+                            })">
+                        <button class="whitespace-nowrap rounded-radius bg-transparent p-0.5 font-semibold text-danger outline-danger hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-100 active:outline-offset-0 dark:text-danger-dark dark:outline-danger-dark" type="submit">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 </body>
 </html>
