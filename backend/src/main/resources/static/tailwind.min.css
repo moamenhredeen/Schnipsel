@@ -449,9 +449,6 @@
   .h-5 {
     height: calc(var(--spacing) * 5);
   }
-  .h-6 {
-    height: calc(var(--spacing) * 6);
-  }
   .h-9 {
     height: calc(var(--spacing) * 9);
   }
@@ -478,9 +475,6 @@
   }
   .w-9 {
     width: calc(var(--spacing) * 9);
-  }
-  .w-11 {
-    width: calc(var(--spacing) * 11);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
@@ -624,25 +618,11 @@
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
-  .space-y-2 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
   .space-y-3 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
-    }
-  }
-  .space-y-4 {
-    :where(& > :not(:last-child)) {
-      --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .space-y-5 {
@@ -1247,54 +1227,6 @@
       visibility: visible;
     }
   }
-  .peer-checked\:bg-primary {
-    &:is(:where(.peer):checked ~ *) {
-      background-color: var(--color-primary);
-    }
-  }
-  .peer-checked\:text-on-surface-strong {
-    &:is(:where(.peer):checked ~ *) {
-      color: var(--color-on-surface-strong);
-    }
-  }
-  .peer-focus\:outline-2 {
-    &:is(:where(.peer):focus ~ *) {
-      outline-style: var(--tw-outline-style);
-      outline-width: 2px;
-    }
-  }
-  .peer-focus\:outline-offset-2 {
-    &:is(:where(.peer):focus ~ *) {
-      outline-offset: 2px;
-    }
-  }
-  .peer-focus\:outline-outline-strong {
-    &:is(:where(.peer):focus ~ *) {
-      outline-color: var(--color-outline-strong);
-    }
-  }
-  .peer-focus\:peer-checked\:outline-primary {
-    &:is(:where(.peer):focus ~ *) {
-      &:is(:where(.peer):checked ~ *) {
-        outline-color: var(--color-primary);
-      }
-    }
-  }
-  .peer-active\:outline-offset-0 {
-    &:is(:where(.peer):active ~ *) {
-      outline-offset: 0px;
-    }
-  }
-  .peer-disabled\:cursor-not-allowed {
-    &:is(:where(.peer):disabled ~ *) {
-      cursor: not-allowed;
-    }
-  }
-  .peer-disabled\:opacity-70 {
-    &:is(:where(.peer):disabled ~ *) {
-      opacity: 70%;
-    }
-  }
   .before\:absolute {
     &::before {
       content: var(--tw-content);
@@ -1305,91 +1237,6 @@
     &::before {
       content: var(--tw-content);
       inset: calc(var(--spacing) * 0);
-    }
-  }
-  .after\:absolute {
-    &::after {
-      content: var(--tw-content);
-      position: absolute;
-    }
-  }
-  .after\:top-0 {
-    &::after {
-      content: var(--tw-content);
-      top: calc(var(--spacing) * 0);
-    }
-  }
-  .after\:bottom-0 {
-    &::after {
-      content: var(--tw-content);
-      bottom: calc(var(--spacing) * 0);
-    }
-  }
-  .after\:left-\[0\.0625rem\] {
-    &::after {
-      content: var(--tw-content);
-      left: 0.0625rem;
-    }
-  }
-  .after\:my-auto {
-    &::after {
-      content: var(--tw-content);
-      margin-block: auto;
-    }
-  }
-  .after\:h-5 {
-    &::after {
-      content: var(--tw-content);
-      height: calc(var(--spacing) * 5);
-    }
-  }
-  .after\:w-5 {
-    &::after {
-      content: var(--tw-content);
-      width: calc(var(--spacing) * 5);
-    }
-  }
-  .after\:rounded-full {
-    &::after {
-      content: var(--tw-content);
-      border-radius: calc(infinity * 1px);
-    }
-  }
-  .after\:bg-on-surface {
-    &::after {
-      content: var(--tw-content);
-      background-color: var(--color-on-surface);
-    }
-  }
-  .after\:transition-all {
-    &::after {
-      content: var(--tw-content);
-      transition-property: all;
-      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-      transition-duration: var(--tw-duration, var(--default-transition-duration));
-    }
-  }
-  .after\:content-\[\'\'\] {
-    &::after {
-      --tw-content: '';
-      content: var(--tw-content);
-    }
-  }
-  .peer-checked\:after\:translate-x-5 {
-    &:is(:where(.peer):checked ~ *) {
-      &::after {
-        content: var(--tw-content);
-        --tw-translate-x: calc(var(--spacing) * 5);
-        translate: var(--tw-translate-x) var(--tw-translate-y);
-      }
-    }
-  }
-  .peer-checked\:after\:bg-on-primary {
-    &:is(:where(.peer):checked ~ *) {
-      &::after {
-        content: var(--tw-content);
-        background-color: var(--color-on-primary);
-      }
     }
   }
   .checked\:border-primary {
@@ -1888,54 +1735,6 @@
       outline-color: var(--color-primary-dark);
     }
   }
-  .dark\:peer-checked\:bg-primary-dark {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):checked ~ *) {
-        background-color: var(--color-primary-dark);
-      }
-    }
-  }
-  .dark\:peer-checked\:text-on-surface-dark-strong {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):checked ~ *) {
-        color: var(--color-on-surface-dark-strong);
-      }
-    }
-  }
-  .dark\:peer-focus\:outline-outline-dark-strong {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):focus ~ *) {
-        outline-color: var(--color-outline-dark-strong);
-      }
-    }
-  }
-  .dark\:peer-focus\:peer-checked\:outline-primary-dark {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):focus ~ *) {
-        &:is(:where(.peer):checked ~ *) {
-          outline-color: var(--color-primary-dark);
-        }
-      }
-    }
-  }
-  .dark\:after\:bg-on-surface-dark {
-    @media (prefers-color-scheme: dark) {
-      &::after {
-        content: var(--tw-content);
-        background-color: var(--color-on-surface-dark);
-      }
-    }
-  }
-  .dark\:peer-checked\:after\:bg-on-primary-dark {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):checked ~ *) {
-        &::after {
-          content: var(--tw-content);
-          background-color: var(--color-on-primary-dark);
-        }
-      }
-    }
-  }
   .dark\:checked\:border-primary-dark {
     @media (prefers-color-scheme: dark) {
       &:checked {
@@ -2093,8 +1892,6 @@
 }
 body {
   font-family: 'Lexend', sans-serif;
-  font-weight: 300;
-  color: var(--color-fg);
 }
 @property --tw-translate-x {
   syntax: "*";
@@ -2262,15 +2059,15 @@ body {
   syntax: "*";
   inherits: false;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @property --tw-content {
   syntax: "*";
   initial-value: "";
   inherits: false;
+}
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
 }
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
@@ -2312,8 +2109,8 @@ body {
       --tw-backdrop-sepia: initial;
       --tw-duration: initial;
       --tw-ease: initial;
-      --tw-outline-style: solid;
       --tw-content: "";
+      --tw-outline-style: solid;
     }
   }
 }
