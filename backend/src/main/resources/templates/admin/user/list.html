@@ -23,33 +23,46 @@
             Create
         </a>
     </div>
-    <form class="flex gap-3 mt-8" th:action="@{/admin/users}">
-        <input class="flex-1 px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-zinc-300 focus:border-transparent text-sm"
-               th:value="${filter.search().orElse('')}"
-               name="search"
-               type="text"
-               placeholder="Search users..."
-               autofocus>
-        <select class="px-4 py-2 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-zinc-300 text-sm"
-                name="enabled">
-            <option value="">All Status</option>
-            <option value="true" th:selected="${filter.enabled().orElse(false)}">Enabled</option>
-            <option value="false" th:selected="${filter.enabled().orElse(false)}">Disabled</option>
-        </select>
-        <select class="px-4 py-2 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-zinc-300 text-sm"
-                name="roleId">
-            <option value="">All Roles</option>
-            <option th:each="role: ${roles}" th:value="${role.getId()}"
-                    th:selected="${role.getId().equals(filter.roleId().orElse(null))}"
-                    th:text="${role.getName()}"></option>
-        </select>
+    <form class="flex items-end gap-3 mt-8" th:action="@{/admin/users}">
+        <div class="flex w-full max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
+            <label for="search" class="w-fit pl-0.5 text-sm">Search</label>
+            <input id="search"
+                   th:value="${filter.search().orElse('')}"
+                   type="text"
+                   class="w-full rounded-radius border border-outline bg-surface-alt px-2 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark"
+                   name="search"
+                   placeholder="Search users..."/>
+        </div>
+
+
+
+        <div class="relative flex max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
+            <label for="enabled" class="w-fit pl-0.5 text-sm">Enabled</label>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="absolute pointer-events-none right-4 top-8 size-5">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+            <select id="enabled" name="enabled" class="w-full appearance-none rounded-radius border border-outline bg-surface-alt px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark">
+                <option value="">All Status</option>
+                <option value="true" th:selected="${filter.enabled().orElse(false)}">Enabled</option>
+                <option value="false" th:selected="${filter.enabled().orElse(false)}">Disabled</option>
+            </select>
+        </div>
+
+        <div class="relative flex max-w-xs flex-col gap-1 text-on-surface dark:text-on-surface-dark">
+            <label for="roleId" class="w-fit pl-0.5 text-sm">Role</label>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="absolute pointer-events-none right-4 top-8 size-5">
+                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+            <select id="roleId" name="roleId" class="w-full appearance-none rounded-radius border border-outline bg-surface-alt px-4 py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-75 dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:focus-visible:outline-primary-dark">
+                <option value="">All Roles</option>
+                <option th:each="role: ${roles}" th:value="${role.getId()}"
+                        th:selected="${role.getId().equals(filter.roleId().orElse(null))}"
+                        th:text="${role.getName()}"></option>
+            </select>
+        </div>
         <span class="flex-1"></span>
-        <button type="submit"
-                class="cursor-pointer px-5 py-2 bg-gray-900 text-white hover:bg-gray-800 transition-colors text-sm font-medium">
-            Search
-        </button>
-        <a class="px-5 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-sm font-medium decoration-none inline-flex items-center"
-           th:href="@{/admin/users}">Reset</a>
+        <a class="whitespace-nowrap rounded-radius bg-surface-alt border border-surface-alt px-4 py-2 text-sm font-medium tracking-wide text-on-surface-strong transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface-alt active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-surface-dark-alt dark:border-surface-dark-alt dark:text-on-surface-dark-strong dark:focus-visible:outline-surface-dark-alt" th:href="@{/admin/users}">Reset</a>
+        <button type="submit" class="whitespace-nowrap rounded-radius bg-secondary border border-secondary px-4 py-2 text-sm font-medium tracking-wide text-on-secondary transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-secondary-dark dark:border-secondary-dark dark:text-on-secondary-dark dark:focus-visible:outline-secondary-dark">Search</button>
     </form>
 
 
@@ -106,35 +119,29 @@
 
 
     <div class="flex justify-end mt-6">
-        <ul class="list-none p-0 flex items-center gap-2 text-gray-900">
-            <li>
-                <a th:href="@{/admin/users(page=${users.previousOrFirstPageable().pageNumber})}"
-                   class="flex items-center justify-center w-9 h-9 border border-gray-300 transition-colors hover:bg-gray-50 rtl:rotate-180"
-                   aria-label="Previous page">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-            </li>
-
-            <li class="px-3 text-sm font-medium text-gray-700"
-                th:text="${users.getNumber() + 1} + ' / ' + ${users.getTotalPages()}">2/12
-            </li>
-
-            <li>
-                <a th:href="@{/admin/users(page=${users.nextOrLastPageable().pageNumber})}"
-                   class="flex items-center justify-center w-9 h-9 border border-gray-300 transition-colors hover:bg-gray-50 rtl:rotate-180"
-                   aria-label="Next page">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd"
-                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-            </li>
-        </ul>
+        <nav aria-label="pagination">
+            <ul class="flex shrink-0 items-center gap-2 text-sm font-medium">
+                <li>
+                    <a th:href="@{/admin/users(page=${users.previousOrFirstPageable().pageNumber})}" class="flex items-center rounded-radius p-1 text-on-surface hover:text-primary dark:text-on-surface-dark dark:hover:text-primary-dark" aria-label="previous page">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-6">
+                            <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                        </svg>
+                        Previous
+                    </a>
+                </li>
+                <li class="px-3 text-sm font-medium text-gray-700"
+                    th:text="${users.getNumber() + 1} + ' / ' + ${users.getTotalPages()}">2/12
+                </li>
+                <li>
+                    <a th:href="@{/admin/users(page=${users.nextOrLastPageable().pageNumber})}" class="flex items-center rounded-radius p-1 text-on-surface hover:text-primary dark:text-on-surface-dark dark:hover:text-primary-dark" aria-label="next page">
+                        Next
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-6">
+                            <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
 
