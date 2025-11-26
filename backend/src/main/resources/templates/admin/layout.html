@@ -6,7 +6,6 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="/tailwind.min.css">
-    <link rel="stylesheet" href="/index.css">
     <title th:replace="${title}">Document</title>
 </head>
 <body>
@@ -25,9 +24,15 @@
          class="fixed left-0 z-20 flex h-svh w-60 shrink-0 flex-col border-r border-outline bg-surface-alt p-4 transition-transform duration-300 md:w-64 md:translate-x-0 md:relative dark:border-outline-dark dark:bg-surface-dark-alt"
          x-bind:class="showSidebar ? 'translate-x-0' : '-translate-x-60'" aria-label="sidebar navigation">
         <!-- logo  -->
-        <a th:href="@{/admin}" class="ml-2 w-fit text-2xl font-bold text-on-surface-strong dark:text-on-surface-dark-strong">
+        <a th:href="@{/admin}">
             <span class="sr-only">homepage</span>
-            <h1 class="text-4xl text-primary">Schnipsel</h1>
+            <div class="flex items-center p-2">
+                <svg class="size-16" width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#8E51FF" d="M107 218.474L264.786 60L362.5 60L155.784 267.425L107 218.474 155.784 267.425L201.565 221.486L263.192 284.467L218.329 330.235L155.784 267.425Z"/>
+                    <path fill="#9AE600" d="M405.041 292.635L246.713 450.568L149 450.233L356.425 243.517L405.041 292.635 356.425 243.517L310.487 289.299L249.076 226.108L294.095 180.494L356.425 243.517Z"/>
+                </svg>
+                <h1 class="text-2xl text-primary">Schnipsel</h1>
+            </div>
         </a>
 
         <!-- search  -->
@@ -102,7 +107,8 @@
                     class="flex w-full items-center rounded-radius gap-2 p-2 text-left text-on-surface hover:bg-primary/5 hover:text-on-surface-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary dark:text-on-surface-dark dark:hover:bg-primary-dark/5 dark:hover:text-on-surface-dark-strong dark:focus-visible:outline-primary-dark"
                     x-bind:class="menuIsOpen ? 'bg-primary/10 dark:bg-primary-dark/10' : ''" aria-haspopup="true"
                     x-on:click="menuIsOpen = ! menuIsOpen" x-bind:aria-expanded="menuIsOpen">
-                <img src="https://penguinui.s3.amazonaws.com/component-assets/avatar-7.webp"
+                <!-- todo: use the first two letters of the username as avatar image for the time being -->
+                <img src="https://placehold.co/128/orange/white?text=MH"
                      class="size-8 object-cover rounded-radius" alt="avatar" aria-hidden="true"/>
                 <div class="flex flex-col">
                     <span class="text-sm font-bold text-on-surface-strong dark:text-on-surface-dark-strong">Alex Martinez</span>
