@@ -1,13 +1,18 @@
 spring:
   config:
-    import: classpath:/application.dev.yml
+    import: optional:file:.env.properties
   application:
-    name: schnipsel
+    name: Schnipsel
   data:
     web:
       pageable:
         default-page-size: 10
         max-page-size: 100
+  
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: none

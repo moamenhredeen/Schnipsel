@@ -37,3 +37,4 @@ node_modules
 
 ### dev files ###
 src/main/resources/application.dev.yml
+.env*
