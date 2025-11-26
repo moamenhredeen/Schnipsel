@@ -4,14 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tailwindcss -i ./src/main/resources/static/index.css -o ./src/main/resources/static/tailwind.min.css --watch"
+    "css": "tailwindcss -i ./src/main/resources/static/index.css -o ./src/main/resources/static/tailwind.min.css --watch",
+    "editor": "rollup -c rollup.config.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@codemirror/commands": "^6.10.0",
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.8",
     "@tailwindcss/cli": "^4.1.17",
+    "codemirror": "^6.0.2",
     "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "rollup": "^4.53.3"
   }
 }
