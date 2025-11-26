@@ -1,7 +1,7 @@
 # ============================
 # 1) Build Stage
 # ============================
-FROM maven:3.9.11-eclipse-temurin-11-alpine AS build
+FROM maven:3.9.11-eclipse-temurin-25-alpine AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the application
-RUN mvn clean package -DskipTests
+RUN mvn clean package
 
 # ============================
 # 2) Runtime Stage
