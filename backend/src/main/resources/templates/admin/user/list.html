@@ -74,8 +74,11 @@
             <tr th:each="user : ${users}">
                 <td class="p-4">
                     <div class="flex w-max items-center gap-2">
-                        <img class="size-10 rounded-full object-cover"
-                             src="https://penguinui.s3.amazonaws.com/component-assets/avatar-7.webp" alt="user avatar"/>
+                        <div class="bg-primary text-on-primary size-10 text-lg rounded-full flex justify-center items-center">
+                            <span th:text="${user.username().substring(0, 2).toUpperCase()}"></span>
+                        </div>
+<!--                        <img class="size-10 rounded-full object-cover"-->
+<!--                             src="https://penguinui.s3.amazonaws.com/component-assets/avatar-7.webp" alt="user avatar"/>-->
                         <div class="flex flex-col">
                             <span th:text="${user.username()}" class="text-black dark:text-white"></span>
                             <span th:text="${user.email()}" class="text-sm text-black opacity-85 dark:text-neutral-200"></span>
