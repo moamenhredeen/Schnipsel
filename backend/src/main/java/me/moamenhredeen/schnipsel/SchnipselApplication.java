@@ -1,11 +1,14 @@
 package me.moamenhredeen.schnipsel;
 
+import me.moamenhredeen.schnipsel.model.Operator;
 import me.moamenhredeen.schnipsel.security.UserDetailsServiceImpl;
 import me.moamenhredeen.schnipsel.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class SchnipselApplication {
 
 	public static void main(String[] args) {
@@ -29,7 +33,7 @@ public class SchnipselApplication {
                 .authorizeHttpRequests(authZ -> authZ
                             .requestMatchers("/*.css", "/*.woff2", "/login*", "/error*", "/logout*").permitAll()
                             .requestMatchers("/admin/users*", "/admin/roles*").hasRole("superadmin")
-                            .requestMatchers("/admin*").hasRole("admin")
+                            .requestMatchers("/admin*").hasAnyRole("admin", "superadmin")
                             .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

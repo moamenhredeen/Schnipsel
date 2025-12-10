@@ -37,6 +37,8 @@
           th:action="@{/admin/snippets/edit}"
           th:object="${snippet}" method="post">
 
+        <input th:field="*{id}" type="hidden" name="id">
+
         <div class="flex gap-4">
             <div class="flex flex-col gap-1 text-on-surface dark:text-on-surface-dark">
                 <label for="title" class="w-fit pl-0.5 text-sm">Title</label>
