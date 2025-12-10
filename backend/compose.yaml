@@ -1,12 +1,14 @@
 services:
   postgres:
     image: 'postgres:latest'
+    container_name: schnipsel_database
     environment:
-      - 'POSTGRES_DB=schnipseldb'
-      - 'POSTGRES_PASSWORD=schnipselpassword'
-      - 'POSTGRES_USER=schnipseluser'
+      POSTGRES_PASSWORD: Schnipsel-Password
+      POSTGRES_DB: schnipsel
     ports:
       - '5432:5432'
+    volumes:
+      - "postgres_data:/var/lib/postgresql"
   keycloak:
     image: 'quay.io/keycloak/keycloak:latest'
     command: start-dev
@@ -16,3 +18,6 @@ services:
       - 'KC_HTTP_PORT=8090'
     ports:
       - '8090:8090'
+
+volumes:
+  postgres_data:
