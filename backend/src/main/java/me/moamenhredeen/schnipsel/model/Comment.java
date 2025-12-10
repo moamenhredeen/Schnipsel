@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "comments")
-public class Comment {
+public class Comment extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -17,9 +17,6 @@ public class Comment {
 
     @ManyToOne()
     private Snippet snippet;
-
-    @Embedded
-    private AuditMetadata auditMetadata;
 
     public Long getId() {
         return id;

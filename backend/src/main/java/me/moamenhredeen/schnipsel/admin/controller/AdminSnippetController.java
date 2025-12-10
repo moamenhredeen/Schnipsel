@@ -11,6 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/admin/snippets")
 public class AdminSnippetController {
@@ -29,7 +35,20 @@ public class AdminSnippetController {
             Model model
     ) {
         var snippets = snippetService.getAllSnippets(filter, pageable).map(s ->
-                new GetSnippetDto(s.getId(), s.getTitle(), s.getDescription(), s.getLanguage()));
+                new GetSnippetDto(
+                        s.getId(),
+                        s.getTitle(),
+                        s.getDescription(),
+                        s.getLanguage(),
+                        ZonedDateTime
+                                .ofInstant(s.getCreatedDate(), ZoneId.systemDefault())
+                                .format(DateTimeFormatter.RFC_1123_DATE_TIME),
+                        s.getLastModifiedDate()
+                                .map(instant ->
+                                    ZonedDateTime
+                                        .ofInstant(instant, ZoneId.systemDefault())
+                                        .format(DateTimeFormatter.RFC_1123_DATE_TIME))
+                                .orElse(null)));
         model.addAttribute("snippets", snippets);
         model.addAttribute("filter", filter);
         return "admin/snippet/list";
@@ -81,9 +100,9 @@ public class AdminSnippetController {
     @GetMapping("edit/{id}")
     public String editSnippetForm(@PathVariable Long id, Model model) {
         try {
-            var user = this.snippetService.getById(id);
-            model.addAttribute("snippet", user.orElseThrow());
-            return "/admin/snippet/edit";
+            var snippet = this.snippetService.getById(id);
+            model.addAttribute("snippet", snippet.orElseThrow());
+            return "admin/snippet/edit";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "redirect:/admin/snippets";
@@ -92,7 +111,7 @@ public class AdminSnippetController {
 
 
     @PostMapping("edit")
-    public String editUser(Snippet snippet, Model model) {
+    public String editSnippet(Snippet snippet, Model model) {
         try {
             this.snippetService.update(snippet);
             return "redirect:/admin/snippets";

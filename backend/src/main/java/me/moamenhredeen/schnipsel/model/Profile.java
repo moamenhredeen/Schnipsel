@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile extends AuditableEntity {
     @Id
     private Long id;
 
@@ -45,9 +45,6 @@ public class Profile {
 
     @Column(length = 1000)
     private String skills;
-
-    @Embedded
-    private AuditMetadata auditMetadata;
 
     public Long getId() {
         return id;

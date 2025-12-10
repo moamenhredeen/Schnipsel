@@ -1,13 +1,14 @@
 package me.moamenhredeen.schnipsel.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "snippets")
-public class Snippet {
+public class Snippet extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -30,9 +31,6 @@ public class Snippet {
 
     @ManyToOne
     private Profile profile;
-
-    @Embedded
-    private AuditMetadata auditMetadata;
 
     public Snippet() {}
 

@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -18,9 +18,6 @@ public class Role {
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-
-    @Embedded
-    private AuditMetadata auditMetadata;
 
     public Long getId() {
         return id;

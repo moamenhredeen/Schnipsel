@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "operators")
-public class Operator {
+public class Operator extends AuditableEntity {
 
     @Id
     private Long id;
@@ -15,9 +15,6 @@ public class Operator {
     @OneToOne
     @MapsId
     private User user;
-
-    @Embedded
-    private AuditMetadata auditMetadata;
 
     public Long getId() {
         return id;
