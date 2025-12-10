@@ -1,0 +1,9 @@
+name = "schnipsel"
+compatibility_date = "2025-11-26"
+
+[assets]
+directory = "./dist"
+
+[[routes]]
+pattern = "schnipsel.moamenhredeen.me"
+custom_domain = true
