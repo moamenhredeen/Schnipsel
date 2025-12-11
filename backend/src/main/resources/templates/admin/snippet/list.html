@@ -50,6 +50,8 @@
                 <th scope="col" class="p-4">Language</th>
                 <th scope="col" class="p-4">Created At</th>
                 <th scope="col" class="p-4">Updated At</th>
+                <th scope="col" class="p-4">Created By</th>
+                <th scope="col" class="p-4">Updated By</th>
                 <th scope="col" class="p-4">Action</th>
             </tr>
             </thead>
@@ -61,8 +63,13 @@
                 </td>
                 <td th:text="${snippet.id()}" class="p-4"></td>
                 <td th:text="${snippet.language()}" class="p-4">Sep 17, 2018</td>
+
                 <td th:text="${snippet.createdDate()}" class="p-4"></td>
                 <td th:text="${snippet.lastModifiedDate()}" class="p-4"></td>
+
+                <td th:text="${snippet.createdBy()?.getUser()?.getEmail()}" class="p-4"></td>
+                <td th:text="${snippet.lastModifiedBy()?.getUser()?.getEmail()}" class="p-4"></td>
+
                 <td class="p-4 flex gap-2">
                     <a th:href="@{/admin/snippets/edit/{id}(id=${snippet.id()})}"
                         class="whitespace-nowrap rounded-radius bg-transparent p-0.5 font-semibold text-primary outline-primary hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-100 active:outline-offset-0 dark:text-primary-dark dark:outline-primary-dark">

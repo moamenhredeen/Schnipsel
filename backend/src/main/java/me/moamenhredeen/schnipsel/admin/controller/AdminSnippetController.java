@@ -48,7 +48,9 @@ public class AdminSnippetController {
                                     ZonedDateTime
                                         .ofInstant(instant, ZoneId.systemDefault())
                                         .format(DateTimeFormatter.RFC_1123_DATE_TIME))
-                                .orElse(null)));
+                                .orElse(null),
+                        s.getCreatedBy().orElse(null),
+                        s.getLastModifiedBy().orElse(null)));
         model.addAttribute("snippets", snippets);
         model.addAttribute("filter", filter);
         return "admin/snippet/list";
@@ -67,12 +69,13 @@ public class AdminSnippetController {
                         s.getDescription(),
                         s.getLanguage(),
                         s.getContent(),
+                        s.getCreatedBy().orElse(null),
+                        s.getLastModifiedBy().orElse(null),
                         s.getComments().stream().map(c ->
                                 new GetCommentDto(
                                         c.getId(),
                                         c.getContent()
-                                )).toList()
-                )).get());
+                                )).toList())).get());
         return "admin/snippet/details";
     }
 

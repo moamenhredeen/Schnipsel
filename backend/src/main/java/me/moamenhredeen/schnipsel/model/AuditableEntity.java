@@ -20,13 +20,13 @@ import java.util.Optional;
 public class AuditableEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
+    @JoinColumn(name = "created_by", updatable = false)
     @NotFound(action = NotFoundAction.EXCEPTION)
     @CreatedBy
     private Operator createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "last_modified_by")
+    @JoinColumn(name = "last_modified_by", insertable = false)
     @NotFound(action = NotFoundAction.EXCEPTION)
     @LastModifiedBy
     private Operator lastModifiedBy;
@@ -39,16 +39,16 @@ public class AuditableEntity {
     @LastModifiedDate
     private Instant lastModifiedDate;
 
-    public Operator getCreatedBy() {
-        return createdBy;
+    public Optional<Operator> getCreatedBy() {
+        return Optional.ofNullable(createdBy);
     }
 
     public void setCreatedBy(Operator createdBy) {
         this.createdBy = createdBy;
     }
 
-    public Operator getLastModifiedBy() {
-        return lastModifiedBy;
+    public Optional<Operator> getLastModifiedBy() {
+        return Optional.ofNullable(lastModifiedBy);
     }
 
     public void setLastModifiedBy(Operator lastModifiedBy) {

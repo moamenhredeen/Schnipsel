@@ -67,4 +67,9 @@ public class SchnipselApplication {
     ApplicationListener<AuthenticationSuccessEvent> authenticationSuccessListener(){
         return event -> IO.println("\uD83C\uDF89 Authentication Success, %s".formatted(event.getAuthentication().getName()));
     }
+
+    @Bean
+    public AuditorAware<Operator> auditorProvider() {
+        return new AuditorAwareImpl();
+    }
 }
